@@ -1,17 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef, type ReactNode } from "react";
-
-type Slide =
-  | { type: "image"; src: string; alt: string }
-  | { type: "video"; src: string; poster: string };
+import type { HeroSlide } from "@/config/types";
 
 export default function HeroCarousel({
   slides,
   interval = 8000,
   children,
 }: {
-  slides: Slide[];
+  slides: HeroSlide[];
   interval?: number;
   children?: ReactNode;
 }) {
@@ -85,7 +82,7 @@ export default function HeroCarousel({
           {slide.type === "image" ? (
             <img
               src={slide.src}
-              alt={slide.alt}
+              alt={slide.alt || ""}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
@@ -93,7 +90,7 @@ export default function HeroCarousel({
               ref={(el) => { videoRefs.current[i] = el; }}
               muted
               playsInline
-              poster={slide.poster}
+              poster={slide.poster || undefined}
               preload="auto"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             >

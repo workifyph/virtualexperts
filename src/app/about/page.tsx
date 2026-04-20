@@ -1,29 +1,27 @@
 import type { Metadata } from "next";
 import ScrollReveal from "@/components/ScrollReveal";
 import Link from "next/link";
-import {
-  founderHighlights,
-  corePrinciples,
-  whyFilipino,
-  businessProfile,
-} from "@/content/siteData";
+import { VideoSection } from "@/components/sections";
+import { siteConfig } from "@/config";
+import { teamMembers, corePrinciples, whyFilipino } from "@/content/siteData";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about Virtual Experts Philippines — a founder-led outsourcing company delivering managed remote teams since 2017.",
+    "Learn about our founder-led outsourcing company delivering managed remote teams since 2017.",
 };
 
 export default function AboutPage() {
+  const { brand } = siteConfig;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    name: "About Virtual Experts Philippines",
+    name: `About ${brand.name}`,
     description: metadata.description,
     mainEntity: {
       "@type": "Organization",
-      name: businessProfile.legalName,
-      foundingDate: businessProfile.established,
+      name: brand.name,
     },
   };
 
@@ -34,13 +32,13 @@ export default function AboutPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Hero — full-bleed image */}
+      {/* Hero */}
       <section className="section-full section-full--half" aria-label="About hero">
         <div className="section-media">
-          <img src="/about-hero.png" alt="VEX team in office meeting with dashboard" style={{ filter: "brightness(0.7) blur(1px)" }} />
+          <img src="/about-hero.png" alt="Team in office meeting" style={{ filter: "brightness(0.7) blur(1px)" }} />
         </div>
         <div className="section-content section-content--center">
-          <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>About VEX</p>
+          <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>About {brand.shortName}</p>
           <h1 className="text-hero-video">
             Built on trust.<br />Driven by results.
           </h1>
@@ -56,12 +54,11 @@ export default function AboutPage() {
               A founder-led company with a long-term view.
             </h2>
             <p className="vex-description" style={{ maxWidth: "64ch", marginInline: "auto", marginBottom: "var(--s-4)" }}>
-              Virtual Experts Philippines OPC was founded in San Jose, Antique with a simple
-              premise: service-led businesses deserve remote support that&apos;s structured,
-              supervised, and built to last.
+              {brand.name} was founded with a simple premise: service-led businesses deserve
+              remote support that&apos;s structured, supervised, and built to last.
             </p>
             <p className="vex-description" style={{ maxWidth: "64ch", marginInline: "auto" }}>
-              Today, VEX operates a 400-person talent pool combining onsite and remote delivery
+              Today we operate a 400-person talent pool combining onsite and remote delivery
               to support teams across 13+ industries — from dental clinics to real estate,
               property management to e-commerce.
             </p>
@@ -69,28 +66,23 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Founders — Leadership and Media */}
+      {/* Team */}
       <section className="vex-section" style={{ background: "var(--bg)" }} aria-label="Leadership">
         <div className="vex-container" style={{ textAlign: "center" }}>
           <ScrollReveal>
-            <p className="vex-eyebrow">Leadership and Media</p>
+            <p className="vex-eyebrow">Leadership</p>
             <h2 className="vex-heading" style={{ maxWidth: "32ch", marginInline: "auto" }}>
-              Meet the people behind the company and hear the story in their own voice.
+              Meet the people behind the company.
             </h2>
-            <p className="vex-description" style={{ maxWidth: "60ch", marginInline: "auto" }}>
-              These short introductions give prospective clients a clearer sense of the leadership,
-              service mindset, and support approach behind the company.
-            </p>
           </ScrollReveal>
 
           <div className="vex-grid vex-grid--2" style={{ marginTop: "var(--s-8)" }}>
-            {founderHighlights.map((f, i) => (
+            {teamMembers.map((f, i) => (
               <ScrollReveal key={f.name} delay={i * 150}>
                 <div style={{
                   borderRadius: "1.5rem",
                   overflow: "hidden",
                   background: "#000",
-                  transition: "transform 180ms ease, box-shadow 180ms ease",
                 }}>
                   <img
                     src={f.image}
@@ -126,7 +118,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Principles — vex-cards */}
+      {/* Principles */}
       <section className="vex-section" aria-label="Core principles">
         <div className="vex-container">
           <ScrollReveal>
@@ -147,33 +139,26 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Why Filipino — video section */}
-      <section className="section-full" aria-label="Why Filipino talent">
-        <div className="section-media">
-          <video autoPlay muted loop playsInline poster="/video-02-poster.jpg">
-            <source src="/video-02.mp4" type="video/mp4" />
-          </video>
+      {/* Why Filipino */}
+      <VideoSection src="/video-02.mp4" poster="/video-02-poster.jpg">
+        <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>
+          Why the Philippines
+        </p>
+        <h2 className="text-section-video mb-10">
+          World-class talent.<br />Philippine-made.
+        </h2>
+        <div className="vex-grid vex-grid--2" style={{ maxWidth: "48rem", width: "100%" }}>
+          {whyFilipino.map((w) => (
+            <div key={w.title} className="service-panel" style={{
+              background: "rgba(255,255,255,0.08)",
+              border: "1px solid rgba(255,255,255,0.08)",
+            }}>
+              <h3 className="service-panel__title" style={{ color: "#fffaf0" }}>{w.title}</h3>
+              <p className="service-panel__body" style={{ color: "rgba(255,248,239,0.75)" }}>{w.body}</p>
+            </div>
+          ))}
         </div>
-        <div className="section-content section-content--center">
-          <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>
-            Why the Philippines
-          </p>
-          <h2 className="text-section-video mb-10">
-            World-class talent.<br />Philippine-made.
-          </h2>
-          <div className="vex-grid vex-grid--2" style={{ maxWidth: "48rem", width: "100%" }}>
-            {whyFilipino.map((w) => (
-              <div key={w.title} className="service-panel" style={{
-                background: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}>
-                <h3 className="service-panel__title" style={{ color: "#fffaf0" }}>{w.title}</h3>
-                <p className="service-panel__body" style={{ color: "rgba(255,248,239,0.75)" }}>{w.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      </VideoSection>
 
       {/* CTA */}
       <section className="vex-section vex-section--cta" style={{ textAlign: "center" }} aria-label="Get started">

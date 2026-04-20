@@ -1,30 +1,13 @@
 @import "tailwindcss";
 
-/* ══════════════════════════════════════════════════════════════
-   VEX 2.0 Design System
-   Ported from virtualexpertsph.vercel.app
-   ══════════════════════════════════════════════════════════════ */
+/* ==================================================================
+   Visually Rich Web App Template - Design System
+   Colors & typography injected by ThemeProvider (config/ThemeProvider.tsx).
+   This file defines layout tokens, component styles, and utilities.
+   ================================================================== */
 
 :root {
-  /* ── Colors ── */
-  --bg: #f7f1e8;
-  --paper: #fffdf8;
-  --paper-strong: #fff9f0;
-  --ink: #12110f;
-  --ink-soft: #2c2a27;
-  --muted: #665f57;
-  --line: #ddd2c4;
-  --gold: #c79b44;
-  --gold-deep: #8d6823;
-  --gold-soft: rgba(199, 155, 68, 0.18);
-  --sand: #f0e5d5;
-  --tan: #ead9bb;
-  --charcoal: #171512;
-  --charcoal-soft: #231f1a;
-
-  /* ── Typography ── */
-  --display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  --sans: "Avenir Next", "Segoe UI", Helvetica, Arial, sans-serif;
+  /* -- Typography Scale (theme-independent) -- */
   --text-hero: clamp(2rem, 4vw, 3.2rem);
   --text-section: clamp(1.5rem, 2.6vw, 2.2rem);
   --text-card-title: 1.25rem;
@@ -32,7 +15,7 @@
   --text-small: 0.875rem;
   --text-eyebrow: 0.72rem;
 
-  /* ── Spacing ── */
+  /* -- Spacing -- */
   --s-2: 0.5rem;
   --s-3: 0.75rem;
   --s-4: 1rem;
@@ -42,7 +25,7 @@
   --s-12: 3rem;
   --s-16: 4rem;
 
-  /* ── Surfaces ── */
+  /* -- Surfaces -- */
   --shadow: 0 12px 32px rgba(18, 17, 15, 0.07);
   --shadow-strong: 0 20px 50px rgba(18, 17, 15, 0.12);
   --radius-card: 1rem;
@@ -50,7 +33,7 @@
   --card-border: 1px solid rgba(221, 210, 196, 0.9);
   --card-bg: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(248,239,224,0.88));
   --card-padding: var(--s-6);
-  --accent-bar: linear-gradient(90deg, rgba(199,155,68,0.9), rgba(141,104,35,0.7));
+  --accent-bar: linear-gradient(90deg, var(--gold), var(--gold-deep));
 }
 
 @theme inline {
@@ -69,7 +52,7 @@
   --font-serif: var(--display);
 }
 
-/* ── Reset & Base ── */
+/* -- Reset & Base -- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
@@ -87,13 +70,13 @@ body {
   overflow-x: hidden;
 }
 
-/* ══════ Container ══════ */
+/* ====== Container ====== */
 .vex-container {
   width: min(1320px, 100% - 3rem);
   margin-inline: auto;
 }
 
-/* ══════ Section Variants ══════ */
+/* ====== Section Variants ====== */
 .vex-section {
   padding-block: var(--s-12);
   scroll-margin-top: var(--s-12);
@@ -112,18 +95,18 @@ body {
 }
 
 .vex-section--tan {
-  background: linear-gradient(180deg, #efe0c6, #ebd8b7);
+  background: linear-gradient(180deg, var(--tan), var(--sand));
 }
 
 .vex-section--cta {
-  background: linear-gradient(180deg, #f7efe2, #f2e6d2);
+  background: linear-gradient(180deg, var(--sand), var(--tan));
 }
 
 .vex-section--sand {
   background: var(--sand);
 }
 
-/* ══════ Section Header ══════ */
+/* ====== Section Header ====== */
 .vex-eyebrow {
   margin: 0 0 var(--s-2);
   text-transform: uppercase;
@@ -161,7 +144,7 @@ body {
   color: rgba(255, 248, 239, 0.74);
 }
 
-/* ══════ Premium Card ══════ */
+/* ====== Premium Card ====== */
 .premium-card {
   position: relative;
   padding: var(--card-padding);
@@ -187,7 +170,7 @@ body {
   box-shadow: var(--shadow-strong);
 }
 
-/* ══════ VEX Card (with accent bar) ══════ */
+/* ====== VEX Card (with accent bar) ====== */
 .vex-card {
   position: relative;
   padding: var(--card-padding);
@@ -240,7 +223,7 @@ body {
   color: rgba(255, 248, 239, 0.7);
 }
 
-/* ══════ Service Panel ══════ */
+/* ====== Service Panel ====== */
 .service-panel {
   position: relative;
   padding: 1.35rem;
@@ -320,7 +303,7 @@ body {
   line-height: 1.6;
 }
 
-/* ══════ Testimonial Card ══════ */
+/* ====== Testimonial Card ====== */
 .testimonial-card {
   position: relative;
   padding: 1.35rem;
@@ -382,7 +365,7 @@ body {
   font-weight: 800;
 }
 
-/* ══════ Proof / Stat Card ══════ */
+/* ====== Proof / Stat Card ====== */
 .proof-stat {
   padding: 1rem 1.05rem;
   border-radius: 1.2rem;
@@ -404,7 +387,7 @@ body {
   line-height: 1.5;
 }
 
-/* ══════ Process Step Card ══════ */
+/* ====== Process Step Card ====== */
 .step-card {
   padding: 1.35rem;
   border-radius: var(--radius-card);
@@ -425,7 +408,7 @@ body {
   width: 2.1rem;
   height: 2.1rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(199,155,68,0.96), rgba(141,104,35,0.96));
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
   color: #fff9f0;
   font-size: var(--text-eyebrow);
   font-weight: 800;
@@ -446,7 +429,7 @@ body {
   line-height: 1.6;
 }
 
-/* ══════ Founder Card ══════ */
+/* ====== Founder Card ====== */
 .founder-card {
   padding: 1rem 1.1rem;
   border-radius: 1.35rem;
@@ -501,7 +484,7 @@ body {
   line-height: 1.6;
 }
 
-/* ══════ Case Study Card ══════ */
+/* ====== Case Study Card ====== */
 .case-card {
   position: relative;
   padding: var(--card-padding);
@@ -559,14 +542,14 @@ body {
   line-height: 1.6;
 }
 
-/* ══════ Industry Pill ══════ */
+/* ====== Industry Pill ====== */
 .industry-pill {
   display: inline-flex;
   align-items: center;
   gap: var(--s-2);
   padding: 0.6rem 1rem;
   border-radius: var(--radius-pill);
-  background: #fffaf1;
+  background: var(--paper);
   border: 1px solid rgba(199, 155, 68, 0.2);
   font-size: var(--text-small);
   font-weight: 600;
@@ -579,7 +562,7 @@ body {
   background: var(--gold-soft);
 }
 
-/* ══════ FAQ Card ══════ */
+/* ====== FAQ Card ====== */
 .faq-card {
   padding: 1.35rem;
   border-radius: 1.45rem;
@@ -588,7 +571,7 @@ body {
   box-shadow: var(--shadow);
 }
 
-/* ══════ Video Frame ══════ */
+/* ====== Video Frame ====== */
 .video-frame {
   border-radius: 1.5rem;
   overflow: hidden;
@@ -604,7 +587,7 @@ body {
   display: block;
 }
 
-/* ══════ Buttons (exact VEX styles) ══════ */
+/* ====== Buttons ====== */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -669,7 +652,6 @@ body {
   border-color: rgba(255, 255, 255, 0.26);
 }
 
-/* On-video overlay buttons */
 .btn-overlay-primary {
   background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
   color: #fff;
@@ -694,7 +676,7 @@ body {
   transform: none !important;
 }
 
-/* ══════ Grids ══════ */
+/* ====== Grids ====== */
 .vex-grid {
   display: grid;
   gap: var(--s-4);
@@ -711,7 +693,7 @@ body {
   .vex-grid--2, .vex-grid--3, .vex-grid--4 { grid-template-columns: 1fr; }
 }
 
-/* ══════ Full-bleed video sections ══════ */
+/* ====== Full-bleed video sections ====== */
 .section-full {
   position: relative;
   width: 100%;
@@ -781,7 +763,7 @@ body {
   color: #fff;
 }
 
-/* ══════ Hero (premium, non-video) ══════ */
+/* ====== Hero (premium, non-video) ====== */
 .hero-premium {
   position: relative;
   overflow: hidden;
@@ -811,7 +793,7 @@ body {
   pointer-events: none;
 }
 
-/* ══════ Highlight List ══════ */
+/* ====== Highlight List ====== */
 .highlight-list {
   list-style: none;
   display: grid;
@@ -836,13 +818,13 @@ body {
   background: linear-gradient(135deg, var(--gold), var(--gold-deep));
 }
 
-/* ══════ Animation ══════ */
+/* ====== Animation ====== */
 @keyframes rise-in {
   from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ══════ Responsive ══════ */
+/* ====== Responsive ====== */
 @media (max-width: 768px) {
   .section-full { min-height: 80vh; }
   .section-content { padding: 0 1.25rem; }
@@ -853,10 +835,10 @@ body {
   .hide-desktop { display: none !important; }
 }
 
-/* ══════ Scrollbar ══════ */
+/* ====== Scrollbar ====== */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
 
-/* ══════ Selection ══════ */
+/* ====== Selection ====== */
 ::selection { background: var(--gold-soft); color: var(--ink); }

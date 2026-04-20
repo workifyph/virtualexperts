@@ -1,25 +1,27 @@
 import type { Metadata } from "next";
 import ScrollReveal from "@/components/ScrollReveal";
 import ContactForm from "./ContactForm";
-import { businessProfile } from "@/content/siteData";
+import { siteConfig } from "@/config";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with Virtual Experts Philippines. Send an inquiry about remote staffing, customer support, or virtual assistant services.",
+    "Get in touch. Send an inquiry about remote staffing, customer support, or virtual assistant services.",
 };
 
 export default function ContactPage() {
+  const { brand, contact } = siteConfig;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    name: "Contact Virtual Experts Philippines",
+    name: `Contact ${brand.name}`,
     description: metadata.description,
     mainEntity: {
       "@type": "Organization",
-      name: businessProfile.legalName,
-      telephone: businessProfile.primaryPhone,
-      email: businessProfile.primaryEmail,
+      name: brand.name,
+      telephone: contact.phone,
+      email: contact.email,
     },
   };
 
@@ -33,7 +35,7 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="section-full section-full--half" aria-label="Contact hero">
         <div className="section-media">
-          <img src="/contact-hero.png" alt="VEX team at work" />
+          <img src="/contact-hero.png" alt="Team at work" />
         </div>
         <div className="section-content section-content--center">
           <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Contact</p>
@@ -63,70 +65,62 @@ export default function ContactPage() {
                 <div>
                   <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Email</p>
                   <a
-                    href={`mailto:${businessProfile.primaryEmail}`}
+                    href={`mailto:${contact.email}`}
                     className="text-lg no-underline"
                     style={{ color: "#fff6e6" }}
                   >
-                    {businessProfile.primaryEmail}
+                    {contact.email}
                   </a>
                 </div>
 
                 <div>
-                  <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Phone (US)</p>
+                  <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Phone</p>
                   <a
-                    href={`tel:${businessProfile.primaryPhone.replace(/\s/g, "")}`}
+                    href={`tel:${contact.phone.replace(/\s/g, "")}`}
                     className="text-lg no-underline"
                     style={{ color: "#fff6e6" }}
                   >
-                    {businessProfile.primaryPhone}
+                    {contact.phone}
                   </a>
                 </div>
 
-                <div>
-                  <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>WhatsApp</p>
-                  <a
-                    href={businessProfile.whatsappLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-lg no-underline"
-                    style={{ color: "#fff6e6" }}
-                  >
-                    {businessProfile.whatsappPhone}
-                  </a>
-                </div>
+                {contact.whatsappLink && (
+                  <div>
+                    <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>WhatsApp</p>
+                    <a
+                      href={contact.whatsappLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg no-underline"
+                      style={{ color: "#fff6e6" }}
+                    >
+                      Chat with us
+                    </a>
+                  </div>
+                )}
 
-                <div>
-                  <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Office</p>
-                  <p style={{ color: "rgba(255,248,239,0.74)" }}>
-                    {businessProfile.officeAddress}
-                  </p>
-                  <a
-                    href={businessProfile.mapLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-1 inline-block text-sm no-underline"
-                    style={{ color: "var(--gold)" }}
-                  >
-                    View on Google Maps
-                  </a>
-                </div>
+                {contact.address && (
+                  <div>
+                    <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Office</p>
+                    <p style={{ color: "rgba(255,248,239,0.74)" }}>
+                      {contact.address}
+                    </p>
+                  </div>
+                )}
 
-                <div>
-                  <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Hours</p>
-                  <p style={{ color: "rgba(255,248,239,0.74)" }}>
-                    {businessProfile.officeHours}
-                  </p>
-                  <p className="text-sm" style={{ color: "rgba(255,248,239,0.5)" }}>
-                    {businessProfile.officeHoursContext}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Response Time</p>
-                  <p style={{ color: "rgba(255,248,239,0.74)" }}>
-                    {businessProfile.expectedResponseTime}
-                  </p>
-                </div>
+                {contact.hours && (
+                  <div>
+                    <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Hours</p>
+                    <p style={{ color: "rgba(255,248,239,0.74)" }}>
+                      {contact.hours}
+                    </p>
+                    {contact.hoursContext && (
+                      <p className="text-sm" style={{ color: "rgba(255,248,239,0.5)" }}>
+                        {contact.hoursContext}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             </ScrollReveal>
           </div>

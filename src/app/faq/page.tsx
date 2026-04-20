@@ -1,56 +1,14 @@
 import type { Metadata } from "next";
 import ScrollReveal from "@/components/ScrollReveal";
 import Link from "next/link";
-import FaqAccordion from "./FaqAccordion";
+import { FaqSection } from "@/components/sections";
+import { faqs } from "@/content/siteData";
 
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Frequently asked questions about Virtual Experts Philippines — pricing, onboarding, team structure, and more.",
+    "Frequently asked questions — pricing, onboarding, team structure, and more.",
 };
-
-const faqs = [
-  {
-    question: "How does pricing work?",
-    answer:
-      "Pricing depends on the role, coverage hours, and scope of work. We offer full-time, part-time, and on-call options. After an initial consultation we provide a transparent quote with no hidden fees.",
-  },
-  {
-    question: "How quickly can you get a team member started?",
-    answer:
-      "Most placements are onboarded within 5 to 10 business days. This includes talent matching, client approval, and a supervised onboarding period to align tools and workflows.",
-  },
-  {
-    question: "What time zones do you cover?",
-    answer:
-      "Our team operates primarily during US business hours (9 AM to 9 PM Eastern), which corresponds to 9 PM to 9 AM Philippine Time. We can also arrange coverage for other time zones on request.",
-  },
-  {
-    question: "Do I manage the team directly?",
-    answer:
-      "You can, but you do not have to. VEX provides supervision, quality monitoring, and daily accountability. You set the priorities and we handle day-to-day execution and oversight.",
-  },
-  {
-    question: "What happens if a team member leaves or underperforms?",
-    answer:
-      "We handle replacement and transition at no additional cost. Our structured model means processes are documented, so a new team member can ramp up quickly without disrupting your operations.",
-  },
-  {
-    question: "Is there a minimum contract length?",
-    answer:
-      "We recommend a minimum of three months to see meaningful results, but we do not lock clients into long-term contracts. Month-to-month arrangements are available after the initial period.",
-  },
-  {
-    question: "What tools and platforms does your team use?",
-    answer:
-      "Our team adapts to your existing tools — whether that is Salesforce, HubSpot, Zendesk, Slack, Microsoft Teams, Google Workspace, or any other platform. We also help set up workflows if needed.",
-  },
-  {
-    question: "How do I get started?",
-    answer:
-      "Start by reaching out through our contact page or WhatsApp. We will schedule a short consultation to understand your needs, then match you with the right talent and begin onboarding.",
-  },
-];
 
 export default function FaqPage() {
   const jsonLd = {
@@ -82,20 +40,14 @@ export default function FaqPage() {
               Common questions, clear answers.
             </h1>
             <p className="vex-description" style={{ maxWidth: "52ch", marginInline: "auto" }}>
-              Everything you need to know about working with Virtual Experts Philippines.
+              Everything you need to know about working with us.
             </p>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Accordion */}
-      <section className="vex-section" aria-label="Frequently asked questions">
-        <div className="vex-container" style={{ maxWidth: "780px" }}>
-          <ScrollReveal>
-            <FaqAccordion items={faqs} />
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* FAQ Accordion */}
+      <FaqSection faqs={faqs} eyebrow="" heading="" />
 
       {/* CTA */}
       <section className="vex-section vex-section--cta" style={{ textAlign: "center" }} aria-label="Still have questions">

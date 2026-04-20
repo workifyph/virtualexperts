@@ -6,7 +6,7 @@ import { servedIndustries } from "@/content/siteData";
 export const metadata: Metadata = {
   title: "Industries",
   description:
-    "VEX provides managed remote support across 13+ industries including real estate, healthcare, e-commerce, legal services, and more.",
+    "Managed remote support across 13+ industries including real estate, healthcare, e-commerce, legal services, and more.",
 };
 
 export default function IndustriesPage() {
@@ -15,7 +15,7 @@ export default function IndustriesPage() {
       {/* Hero */}
       <section className="section-full section-full--half" aria-label="Industries hero">
         <div className="section-media">
-          <img src="/industries-hero.png" alt="Philippine cityscape at sunset" />
+          <img src="/industries-hero.png" alt="Cityscape at sunset" />
         </div>
         <div className="section-content section-content--center">
           <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Industries</p>

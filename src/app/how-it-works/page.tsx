@@ -1,33 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
-import { howModelWorks, businessProfile } from "@/content/siteData";
+import { VideoSection } from "@/components/sections";
+import { siteConfig } from "@/config";
+import { howModelWorks } from "@/content/siteData";
 
 export const metadata: Metadata = {
   title: "How It Works",
   description:
-    "Learn the VEX process — from consultation and talent matching to structured onboarding and ongoing managed support.",
+    "Learn our process — from consultation and talent matching to structured onboarding and ongoing managed support.",
 };
 
 export default function HowItWorksPage() {
+  const { contact } = siteConfig;
+
   return (
     <>
       {/* Hero */}
-      <section className="section-full section-full--half" aria-label="How it works hero">
-        <div className="section-media">
-          <video autoPlay muted loop playsInline poster="/video-02-poster.jpg">
-            <source src="/video-02.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <div className="section-content section-content--center">
-          <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>How It Works</p>
-          <h1 className="text-hero-video">
-            Simple process.<br />Reliable results.
-          </h1>
-        </div>
-      </section>
+      <VideoSection src="/video-02.mp4" poster="/video-02-poster.jpg" halfHeight>
+        <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>How It Works</p>
+        <h1 className="text-hero-video">
+          Simple process.<br />Reliable results.
+        </h1>
+      </VideoSection>
 
-      {/* Steps — step-cards */}
+      {/* Steps */}
       <section className="vex-section" aria-label="Process steps">
         <div className="vex-container">
           <div className="vex-grid vex-grid--4">
@@ -55,14 +52,16 @@ export default function HowItWorksPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Link href="/contact" className="btn btn-primary">Send an Inquiry</Link>
-              <a
-                href={businessProfile.whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-tertiary-dark"
-              >
-                Chat on WhatsApp
-              </a>
+              {contact.whatsappLink && (
+                <a
+                  href={contact.whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-tertiary-dark"
+                >
+                  Chat on WhatsApp
+                </a>
+              )}
             </div>
           </ScrollReveal>
         </div>

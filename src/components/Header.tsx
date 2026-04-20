@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { navLinks, businessProfile } from "@/content/siteData";
+import { siteConfig } from "@/config";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { brand, nav } = siteConfig;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -35,8 +36,8 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 no-underline" onClick={() => setMenuOpen(false)}>
           <img
-            src="/vex_logo.png"
-            alt={businessProfile.legalName}
+            src={brand.logo}
+            alt={brand.name}
             className="h-9 w-auto"
           />
           <span
@@ -44,13 +45,13 @@ export default function Header() {
               scrolled || menuOpen ? "text-[var(--ink)]" : "text-white"
             }`}
           >
-            {businessProfile.shortName}
+            {brand.shortName}
           </span>
         </Link>
 
         {/* Desktop nav */}
         <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
+          {nav.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -105,7 +106,7 @@ export default function Header() {
         }`}
       >
         <div className="flex h-full flex-col items-center justify-center gap-8">
-          {navLinks.map((link) => (
+          {nav.map((link) => (
             <Link
               key={link.href}
               href={link.href}

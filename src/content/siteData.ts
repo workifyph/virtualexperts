@@ -1,128 +1,107 @@
-export const socialLinks = [
-  { label: "Facebook", href: "https://www.facebook.com/VirtualExpertsPH", icon: "facebook" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/virtual-experts-philippines", icon: "linkedin" },
-  { label: "Instagram", href: "https://www.instagram.com/virtualexpertsphilippines", icon: "instagram" },
-  { label: "YouTube", href: "https://youtube.com/@virtualexpertsphilippines", icon: "youtube" },
-  { label: "TikTok", href: "https://www.tiktok.com/@virtualexperts.ph", icon: "tiktok" },
-] as const;
+import type {
+  Stat,
+  ServiceItem,
+  TestimonialItem,
+  StepItem,
+  CaseStudyItem,
+  TeamMember,
+  IndustryItem,
+  PillarItem,
+  FaqItem,
+  HeroSlide,
+} from "@/config/types";
 
-export const businessProfile = {
-  legalName: "Virtual Experts Philippines OPC",
-  shortName: "VEX",
-  established: "2017",
-  tagline: "Remote support teams for service-led businesses",
-  description: "Your trusted global outsourcing partner delivering skilled talent, structured systems, and scalable solutions.",
-  primaryEmail: "contact@virtualexperts.ph",
-  clientCareEmail: "carmeladawn@virtualexperts.ph",
-  operationsEmail: "jenny@virtualexperts.ph",
-  primaryPhone: "+1 (818) 381-0070",
-  localPhone: "(0917) 117 5237",
-  whatsappPhone: "+63 917 109 2591",
-  whatsappLink: "https://wa.me/639171092591",
-  expectedResponseTime: "Within 24 hours",
-  cityLabel: "San Jose, Antique, Philippines",
-  officeAddress: "Susana Bldg 6, E. Nietes St, Funda Dalipe, San Jose, Antique 5700",
-  officeHours: "9:00 PM to 9:00 AM Philippine Time",
-  timeZoneNote: "Philippine Time (GMT+8)",
-  officeHoursContext: "Aligned with US business hours",
-  mapLink: "https://maps.app.goo.gl/62feuGaMxoDcTLbLA?g_st=ic",
-  siteUrl: "https://virtualexperts.ph",
-} as const;
+/* ==================================================================
+   Content Data
+   All page content lives here. Edit arrays below to change what
+   appears on the site. No component code changes needed.
+   ================================================================== */
 
-export const navLinks = [
-  { label: "Services", href: "/services" },
-  { label: "About", href: "/about" },
-  { label: "How It Works", href: "/how-it-works" },
-  { label: "Industries", href: "/industries" },
-  { label: "Case Studies", href: "/case-studies" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/contact" },
-] as const;
+export const heroSlides: HeroSlide[] = [
+  { type: "image", src: "/welcome-video-poster.jpg", alt: "Executive leadership in modern office" },
+  { type: "video", src: "/welcome-video.mp4", poster: "/welcome-video-poster.jpg" },
+  { type: "image", src: "/video-02-poster.jpg", alt: "Team collaboration and strategy session" },
+];
 
-export const trustStats = [
+export const trustStats: Stat[] = [
   { value: "2017", label: "Established" },
   { value: "400+", label: "Talent pool" },
   { value: "13+", label: "Industries served" },
   { value: "24/7", label: "Coverage available" },
-] as const;
+];
 
-export const services = [
+export const services: ServiceItem[] = [
   {
     slug: "customer-support",
     title: "Customer Support",
-    shortDesc: "Professional call handling, inbox management, and live chat.",
+    description: "Professional call handling, inbox management, and live chat.",
     image: "/service-customer.png",
-    video: null,
   },
   {
     slug: "virtual-assistance",
     title: "Virtual Assistance",
-    shortDesc: "Calendar, CRM, lead follow-up, and executive support.",
+    description: "Calendar, CRM, lead follow-up, and executive support.",
     image: "/service-assistant.png",
-    video: null,
   },
   {
     slug: "back-office",
     title: "Back-Office Operations",
-    shortDesc: "Reporting, documentation, billing, and workflow coordination.",
+    description: "Reporting, documentation, billing, and workflow coordination.",
     image: "/service-backoffice.png",
-    video: null,
   },
   {
     slug: "on-call-support",
     title: "On-Call VA Support",
-    shortDesc: "Flexible, project-based help starting at $6/hour.",
+    description: "Flexible, project-based help starting at $6/hour.",
     image: "/home-feature-cst.png",
-    video: null,
   },
   {
     slug: "recruitment",
     title: "Recruitment Support",
-    shortDesc: "End-to-end sourcing, screening, and candidate matching.",
+    description: "End-to-end sourcing, screening, and candidate matching.",
     image: "/home-feature-dgp.png",
-    video: null,
   },
-] as const;
+];
 
-export const founderHighlights = [
+export const teamMembers: TeamMember[] = [
   {
     name: "Dulce Chiongson",
     role: "CEO & Co-Founder",
     image: "/dulce-chiongson.jpg",
-    body: "Co-founded VEX in 2017 and leads the company with a long-term focus on service quality, professionalism, and dependable execution.",
+    bio: "Co-founded VEX in 2017 and leads the company with a long-term focus on service quality, professionalism, and dependable execution.",
   },
   {
     name: "Chep Elvas",
     role: "Co-Founder",
     image: "/chep-elvas.png",
-    body: "Brings customer relations, marketing, and business planning experience that helps clients scale through stronger support systems.",
+    bio: "Brings customer relations, marketing, and business planning experience that helps clients scale through stronger support systems.",
   },
-] as const;
+];
 
-export const servedIndustries = [
-  { name: "Real Estate", icon: "🏠" },
-  { name: "Insurance", icon: "🛡️" },
-  { name: "E-commerce", icon: "🛒" },
-  { name: "Healthcare", icon: "🏥" },
-  { name: "Legal Services", icon: "⚖️" },
-  { name: "Travel & Hospitality", icon: "✈️" },
-  { name: "Education", icon: "📚" },
-  { name: "Tech & Software", icon: "💻" },
-  { name: "Sports & Events", icon: "🎟️" },
-  { name: "Multimedia & Film", icon: "🎬" },
-  { name: "Logistics", icon: "📦" },
-  { name: "Agriculture", icon: "🌱" },
-  { name: "Property Management", icon: "🏢" },
-] as const;
+export const servedIndustries: IndustryItem[] = [
+  { name: "Real Estate", icon: "\u{1F3E0}" },
+  { name: "Insurance", icon: "\u{1F6E1}\uFE0F" },
+  { name: "E-commerce", icon: "\u{1F6D2}" },
+  { name: "Healthcare", icon: "\u{1F3E5}" },
+  { name: "Legal Services", icon: "\u2696\uFE0F" },
+  { name: "Travel & Hospitality", icon: "\u2708\uFE0F" },
+  { name: "Education", icon: "\u{1F4DA}" },
+  { name: "Tech & Software", icon: "\u{1F4BB}" },
+  { name: "Sports & Events", icon: "\u{1F39F}\uFE0F" },
+  { name: "Multimedia & Film", icon: "\u{1F3AC}" },
+  { name: "Logistics", icon: "\u{1F4E6}" },
+  { name: "Agriculture", icon: "\u{1F331}" },
+  { name: "Property Management", icon: "\u{1F3E2}" },
+];
 
-export const corePrinciples = [
+export const corePrinciples: PillarItem[] = [
   { title: "Opportunity", body: "Growth through practical expertise and execution support." },
   { title: "Accountability", body: "Clear ownership, documented work, dependable follow-through." },
   { title: "Integrity", body: "Ethical work, honest communication, willingness to speak up." },
   { title: "Efficiency", body: "Accurate, cost-effective support easy to integrate." },
-] as const;
+];
 
-export const clientTestimonials = [
+export const clientTestimonials: TestimonialItem[] = [
   {
     name: "Brian A.",
     role: "Long-term client partner",
@@ -153,9 +132,9 @@ export const clientTestimonials = [
     role: "Operations leader",
     quote: "For the last eight years of my career, I have experience working directly with outsourced workers across multiple countries and none have been able to match the consistency and effort provided by Virtual Experts PH. They regularly demonstrate themselves to be reliable coworkers and fantastic human beings to interact with.",
   },
-] as const;
+];
 
-export const caseStudies = [
+export const caseStudies: CaseStudyItem[] = [
   {
     slug: "dental-clinics",
     industry: "Dental Clinics",
@@ -183,24 +162,59 @@ export const caseStudies = [
     approach: "Communication support, escalation handling, and structured back-office help.",
     outcome: "More stable operations, consistent tenant communication, less firefighting.",
   },
-] as const;
+];
 
-export const howModelWorks = [
+export const howModelWorks: StepItem[] = [
   { step: "01", title: "Consultation", body: "We discuss your needs, coverage, and team structure." },
   { step: "02", title: "Talent Matching", body: "Pre-vetted candidates aligned with your workflow." },
   { step: "03", title: "Onboarding", body: "Supervised setup covering tools and protocols." },
   { step: "04", title: "Ongoing Support", body: "Quality monitoring, escalations, and scaling." },
-] as const;
+];
 
-export const whyFilipino = [
+export const advantagePillars: PillarItem[] = [
+  { title: "A System", body: "Structured workflows, supervision, daily accountability." },
+  { title: "A Team", body: "Support that doesn't depend on one person alone." },
+  { title: "A Partnership", body: "Long-term growth built on communication and continuity." },
+];
+
+export const whyFilipino: PillarItem[] = [
   { title: "English proficiency", body: "Highest in Asia, natural fluency for Western clients." },
   { title: "Cultural alignment", body: "Decades of BPO growth built Western-ready professionals." },
   { title: "Cost-effective quality", body: "Structured talent at a fraction of onshore cost." },
   { title: "Proven infrastructure", body: "2nd largest BPO destination globally." },
-] as const;
+];
 
-export const advantagePillars = [
-  { title: "A System", body: "Structured workflows, supervision, daily accountability." },
-  { title: "A Team", body: "Support that doesn't depend on one person alone." },
-  { title: "A Partnership", body: "Long-term growth built on communication and continuity." },
-] as const;
+export const faqs: FaqItem[] = [
+  {
+    question: "How quickly can I get started?",
+    answer: "Most engagements are up and running within 5-10 business days after our initial consultation. This includes talent matching, onboarding setup, and tool configuration.",
+  },
+  {
+    question: "What's the minimum commitment?",
+    answer: "We offer flexible arrangements starting from part-time support. There's no long-term contract required, though most clients find that ongoing partnerships deliver the best results.",
+  },
+  {
+    question: "How do you ensure quality?",
+    answer: "We maintain structured oversight including daily check-ins, quality audits, and direct client feedback loops. Every team member is supervised and held accountable.",
+  },
+  {
+    question: "What tools do your teams use?",
+    answer: "We adapt to your existing tech stack. Our teams are experienced with major CRMs, project management tools, communication platforms, and industry-specific software.",
+  },
+  {
+    question: "Can I scale up or down?",
+    answer: "Absolutely. Our model is built for flexibility. You can add team members as your business grows or reduce coverage during slower periods.",
+  },
+  {
+    question: "What time zones do you cover?",
+    answer: "Our primary operations align with US business hours (9PM-9AM Philippine Time), but we can configure coverage for any time zone requirements.",
+  },
+  {
+    question: "How is billing structured?",
+    answer: "We offer transparent monthly billing based on your team size and coverage hours. No hidden fees, no surprises.",
+  },
+  {
+    question: "What happens if someone is unavailable?",
+    answer: "We have backup systems in place. If your assigned team member is unavailable, a trained backup steps in to ensure continuity of service.",
+  },
+];

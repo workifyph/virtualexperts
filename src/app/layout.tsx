@@ -1,89 +1,67 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { businessProfile } from "@/content/siteData";
+import { siteConfig } from "@/config";
+import { ThemeStyles } from "@/config/ThemeProvider";
 import "./globals.css";
 
+const { brand, seo, contact } = siteConfig;
+
 export const metadata: Metadata = {
-  metadataBase: new URL(businessProfile.siteUrl),
+  metadataBase: new URL(seo.url),
   title: {
-    default: `${businessProfile.shortName} — ${businessProfile.tagline}`,
-    template: `%s | ${businessProfile.shortName}`,
+    default: `${brand.shortName} — ${brand.tagline}`,
+    template: `%s | ${brand.shortName}`,
   },
-  description: businessProfile.description,
-  keywords: [
-    "virtual assistants Philippines",
-    "remote staffing",
-    "outsourcing Philippines",
-    "BPO services",
-    "customer support outsourcing",
-    "virtual assistant company",
-    "managed remote teams",
-    "Filipino virtual assistants",
-    "back office support",
-    "on-call VA support",
-  ],
-  authors: [{ name: businessProfile.legalName }],
+  description: brand.description,
+  keywords: seo.keywords,
+  authors: [{ name: brand.name }],
   openGraph: {
     type: "website",
-    locale: "en_US",
-    url: businessProfile.siteUrl,
-    siteName: businessProfile.legalName,
-    title: `${businessProfile.shortName} — ${businessProfile.tagline}`,
-    description: businessProfile.description,
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    locale: seo.locale,
+    url: seo.url,
+    siteName: brand.name,
+    title: `${brand.shortName} — ${brand.tagline}`,
+    description: brand.description,
+    images: [{ url: seo.ogImage, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${businessProfile.shortName} — ${businessProfile.tagline}`,
-    description: businessProfile.description,
-    images: ["/og-image.png"],
+    title: `${brand.shortName} — ${brand.tagline}`,
+    description: brand.description,
+    images: [seo.ogImage],
   },
   robots: {
     index: true,
     follow: true,
     googleBot: { index: true, follow: true, "max-video-preview": -1, "max-image-preview": "large", "max-snippet": -1 },
   },
-  alternates: { canonical: businessProfile.siteUrl },
+  alternates: { canonical: seo.url },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: businessProfile.legalName,
-    url: businessProfile.siteUrl,
-    logo: `${businessProfile.siteUrl}/vex_logo.png`,
-    description: businessProfile.description,
-    foundingDate: businessProfile.established,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Susana Bldg 6, E. Nietes St, Funda Dalipe",
-      addressLocality: "San Jose",
-      addressRegion: "Antique",
-      postalCode: "5700",
-      addressCountry: "PH",
-    },
+    name: brand.name,
+    url: seo.url,
+    logo: `${seo.url}${brand.logo}`,
+    description: brand.description,
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: businessProfile.primaryPhone,
+        telephone: contact.phone,
         contactType: "customer service",
-        availableLanguage: ["English", "Filipino"],
+        availableLanguage: ["English"],
       },
     ],
-    sameAs: [
-      "https://www.facebook.com/VirtualExpertsPH",
-      "https://www.linkedin.com/company/virtual-experts-philippines",
-      "https://www.instagram.com/virtualexpertsphilippines",
-      "https://youtube.com/@virtualexpertsphilippines",
-      "https://www.tiktok.com/@virtualexperts.ph",
-    ],
+    sameAs: siteConfig.social.map((s) => s.href),
   };
 
   return (
     <html lang="en">
       <head>
+        <ThemeStyles />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

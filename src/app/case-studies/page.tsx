@@ -1,33 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
+import { VideoSection } from "@/components/sections";
 import { caseStudies } from "@/content/siteData";
 
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "See how VEX remote teams have helped dental clinics, real estate teams, and property managers improve operations and reduce missed opportunities.",
+    "See how our remote teams have helped businesses improve operations and reduce missed opportunities.",
 };
 
 export default function CaseStudiesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="section-full section-full--half" aria-label="Case studies hero">
-        <div className="section-media">
-          <video autoPlay muted loop playsInline poster="/welcome-video-poster.jpg">
-            <source src="/welcome-video.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <div className="section-content section-content--center">
-          <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Case Studies</p>
-          <h1 className="text-hero-video">
-            Real results.<br />Real businesses.
-          </h1>
-        </div>
-      </section>
+      <VideoSection src="/welcome-video.mp4" poster="/welcome-video-poster.jpg" halfHeight>
+        <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Case Studies</p>
+        <h1 className="text-hero-video">
+          Real results.<br />Real businesses.
+        </h1>
+      </VideoSection>
 
-      {/* Cases — case-cards in grid */}
+      {/* Cases */}
       <section className="vex-section" aria-label="Case study details">
         <div className="vex-container">
           <div className="vex-grid vex-grid--3">
