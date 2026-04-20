@@ -1,0 +1,192 @@
+import type { Metadata } from "next";
+import ScrollReveal from "@/components/ScrollReveal";
+import Link from "next/link";
+import {
+  founderHighlights,
+  corePrinciples,
+  whyFilipino,
+  businessProfile,
+} from "@/content/siteData";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Learn about Virtual Experts Philippines — a founder-led outsourcing company delivering managed remote teams since 2017.",
+};
+
+export default function AboutPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "About Virtual Experts Philippines",
+    description: metadata.description,
+    mainEntity: {
+      "@type": "Organization",
+      name: businessProfile.legalName,
+      foundingDate: businessProfile.established,
+    },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      {/* Hero — full-bleed image */}
+      <section className="section-full section-full--half" aria-label="About hero">
+        <div className="section-media">
+          <img src="/about-hero.png" alt="VEX team in office meeting with dashboard" style={{ filter: "brightness(0.7) blur(1px)" }} />
+        </div>
+        <div className="section-content section-content--center">
+          <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>About VEX</p>
+          <h1 className="text-hero-video">
+            Built on trust.<br />Driven by results.
+          </h1>
+        </div>
+      </section>
+
+      {/* Story */}
+      <section className="vex-section" aria-label="Our story">
+        <div className="vex-container" style={{ textAlign: "center" }}>
+          <ScrollReveal>
+            <p className="vex-eyebrow">Since 2017</p>
+            <h2 className="vex-heading" style={{ maxWidth: "28ch", marginInline: "auto" }}>
+              A founder-led company with a long-term view.
+            </h2>
+            <p className="vex-description" style={{ maxWidth: "64ch", marginInline: "auto", marginBottom: "var(--s-4)" }}>
+              Virtual Experts Philippines OPC was founded in San Jose, Antique with a simple
+              premise: service-led businesses deserve remote support that&apos;s structured,
+              supervised, and built to last.
+            </p>
+            <p className="vex-description" style={{ maxWidth: "64ch", marginInline: "auto" }}>
+              Today, VEX operates a 400-person talent pool combining onsite and remote delivery
+              to support teams across 13+ industries — from dental clinics to real estate,
+              property management to e-commerce.
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Founders — Leadership and Media */}
+      <section className="vex-section" style={{ background: "var(--bg)" }} aria-label="Leadership">
+        <div className="vex-container" style={{ textAlign: "center" }}>
+          <ScrollReveal>
+            <p className="vex-eyebrow">Leadership and Media</p>
+            <h2 className="vex-heading" style={{ maxWidth: "32ch", marginInline: "auto" }}>
+              Meet the people behind the company and hear the story in their own voice.
+            </h2>
+            <p className="vex-description" style={{ maxWidth: "60ch", marginInline: "auto" }}>
+              These short introductions give prospective clients a clearer sense of the leadership,
+              service mindset, and support approach behind the company.
+            </p>
+          </ScrollReveal>
+
+          <div className="vex-grid vex-grid--2" style={{ marginTop: "var(--s-8)" }}>
+            {founderHighlights.map((f, i) => (
+              <ScrollReveal key={f.name} delay={i * 150}>
+                <div style={{
+                  borderRadius: "1.5rem",
+                  overflow: "hidden",
+                  background: "#000",
+                  transition: "transform 180ms ease, box-shadow 180ms ease",
+                }}>
+                  <img
+                    src={f.image}
+                    alt={f.name}
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      aspectRatio: "3 / 4",
+                      objectFit: "cover",
+                      objectPosition: "center 15%",
+                      display: "block",
+                    }}
+                  />
+                </div>
+                <div style={{ marginTop: "var(--s-4)", textAlign: "center" }}>
+                  <h3 style={{
+                    fontFamily: "var(--display)",
+                    fontWeight: 700,
+                    fontSize: "1.2rem",
+                    marginBottom: "0.15rem",
+                  }}>{f.name}</h3>
+                  <p style={{
+                    textTransform: "uppercase",
+                    letterSpacing: "0.14em",
+                    fontSize: "var(--text-eyebrow)",
+                    fontWeight: 800,
+                    color: "var(--gold-deep)",
+                  }}>{f.role}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Principles — vex-cards */}
+      <section className="vex-section" aria-label="Core principles">
+        <div className="vex-container">
+          <ScrollReveal>
+            <p className="vex-eyebrow">Our Principles</p>
+            <h2 className="vex-heading">What guides us every day.</h2>
+          </ScrollReveal>
+
+          <div className="vex-grid vex-grid--4">
+            {corePrinciples.map((p, i) => (
+              <ScrollReveal key={p.title} delay={i * 100}>
+                <div className="vex-card">
+                  <h3 className="vex-card__title">{p.title}</h3>
+                  <p className="vex-card__body">{p.body}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Filipino — video section */}
+      <section className="section-full" aria-label="Why Filipino talent">
+        <div className="section-media">
+          <video autoPlay muted loop playsInline poster="/video-02-poster.jpg">
+            <source src="/video-02.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div className="section-content section-content--center">
+          <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>
+            Why the Philippines
+          </p>
+          <h2 className="text-section-video mb-10">
+            World-class talent.<br />Philippine-made.
+          </h2>
+          <div className="vex-grid vex-grid--2" style={{ maxWidth: "48rem", width: "100%" }}>
+            {whyFilipino.map((w) => (
+              <div key={w.title} className="service-panel" style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}>
+                <h3 className="service-panel__title" style={{ color: "#fffaf0" }}>{w.title}</h3>
+                <p className="service-panel__body" style={{ color: "rgba(255,248,239,0.75)" }}>{w.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="vex-section vex-section--cta" style={{ textAlign: "center" }} aria-label="Get started">
+        <div className="vex-container" style={{ maxWidth: "720px" }}>
+          <ScrollReveal>
+            <h2 className="vex-heading">Let&apos;s work together.</h2>
+            <p className="vex-description" style={{ marginBottom: "var(--s-6)" }}>
+              Tell us about your business and we&apos;ll design the support model that fits.
+            </p>
+            <Link href="/contact" className="btn btn-primary">Get Started</Link>
+          </ScrollReveal>
+        </div>
+      </section>
+    </>
+  );
+}

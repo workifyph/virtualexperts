@@ -1,0 +1,15 @@
+{
+  "name": "Virtual Experts Philippines",
+  "short_name": "VirtualExpertsPH",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f0e7",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

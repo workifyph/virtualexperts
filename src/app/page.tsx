@@ -1,65 +1,251 @@
-import Image from "next/image";
+import Link from "next/link";
+import ScrollReveal from "@/components/ScrollReveal";
+import HeroCarousel from "@/components/HeroCarousel";
+import {
+  trustStats,
+  services,
+  clientTestimonials,
+  advantagePillars,
+  servedIndustries,
+  howModelWorks,
+  businessProfile,
+} from "@/content/siteData";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      {/* ══════ HERO — Carousel: image → video → image ══════ */}
+      <HeroCarousel
+        slides={[
+          { type: "image", src: "/welcome-video-poster.jpg", alt: "VEX executive leadership in modern office" },
+          { type: "video", src: "/welcome-video.mp4", poster: "/welcome-video-poster.jpg" },
+          { type: "image", src: "/video-02-poster.jpg", alt: "VEX team collaboration and strategy session" },
+        ]}
+        interval={7000}
+      >
+        <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>
+          {businessProfile.legalName}
+        </p>
+        <h1 className="text-hero-video mb-6">
+          Your remote team,
+          <br />
+          built to perform.
+        </h1>
+        <p className="max-w-xl text-lg text-white/75 mb-10 leading-relaxed">
+          {businessProfile.tagline}
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <Link href="/contact" className="btn btn-overlay-primary">
+            Start a Conversation
+          </Link>
+          <Link href="/services" className="btn btn-overlay-secondary">
+            Explore Services
+          </Link>
+        </div>
+      </HeroCarousel>
+
+      {/* ══════ TRUST STATS — Proof ribbon ══════ */}
+      <section className="vex-section vex-section--light" aria-label="Company highlights">
+        <div className="vex-container">
+          <div className="vex-grid vex-grid--4">
+            {trustStats.map((stat) => (
+              <div key={stat.label} className="proof-stat">
+                <span className="proof-stat__value">{stat.value}</span>
+                <span className="proof-stat__label">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════ SERVICES — Service panels ══════ */}
+      <section className="vex-section" aria-label="Our services">
+        <div className="vex-container">
+          <ScrollReveal>
+            <div className="mb-8">
+              <p className="vex-eyebrow">What We Do</p>
+              <h2 className="vex-heading">
+                Structured support,<br />tailored to your business.
+              </h2>
+              <p className="vex-description" style={{ maxWidth: "56ch" }}>
+                From customer calls to back-office workflows, our managed teams
+                handle the work so you can focus on growth.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="vex-grid vex-grid--3">
+            {services.map((svc, i) => (
+              <ScrollReveal key={svc.slug} delay={i * 100}>
+                <div className="service-panel">
+                  <p className="service-panel__label">{String(i + 1).padStart(2, "0")}</p>
+                  <h3 className="service-panel__title">{svc.title}</h3>
+                  <p className="service-panel__body">{svc.shortDesc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <ScrollReveal>
+            <div className="mt-8 text-center">
+              <Link href="/services" className="btn btn-tertiary">
+                View All Services
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ══════ VEX DIFFERENCE — Full-bleed video ══════ */}
+      <section className="section-full" aria-label="The VEX difference">
+        <div className="section-media">
+          <video autoPlay muted loop playsInline poster="/video-02-poster.jpg" preload="auto">
+            <source src="/video-02.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div className="section-content section-content--center">
+          <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>
+            The VEX Difference
           </p>
+          <h2 className="text-section-video mb-8">
+            Not freelancers.<br />Not a generic agency.
+          </h2>
+          <div className="vex-grid vex-grid--3" style={{ maxWidth: "56rem", width: "100%" }}>
+            {advantagePillars.map((pillar) => (
+              <div key={pillar.title} className="service-panel" style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}>
+                <h3 className="service-panel__title" style={{ color: "#fffaf0" }}>
+                  {pillar.title}
+                </h3>
+                <p className="service-panel__body" style={{ color: "rgba(255,248,239,0.75)" }}>
+                  {pillar.body}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* ══════ HOW IT WORKS — Step cards ══════ */}
+      <section className="vex-section vex-section--tan" aria-label="How it works">
+        <div className="vex-container">
+          <ScrollReveal>
+            <div className="mb-8">
+              <p className="vex-eyebrow">How It Works</p>
+              <h2 className="vex-heading">
+                Four steps to your<br />dedicated team.
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="vex-grid vex-grid--4">
+            {howModelWorks.map((step, i) => (
+              <ScrollReveal key={step.step} delay={i * 120}>
+                <div className="step-card">
+                  <div className="step-badge">{step.step}</div>
+                  <h3 className="step-card__title">{step.title}</h3>
+                  <p className="step-card__body">{step.body}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <ScrollReveal>
+            <div className="mt-8 text-center">
+              <Link href="/how-it-works" className="btn btn-tertiary">
+                Learn More
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* ══════ INDUSTRIES — Pill grid ══════ */}
+      <section className="vex-section" aria-label="Industries we serve">
+        <div className="vex-container">
+          <ScrollReveal>
+            <div className="mb-8">
+              <p className="vex-eyebrow">Industries</p>
+              <h2 className="vex-heading">
+                Support built for<br />your industry.
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="flex flex-wrap gap-3">
+            {servedIndustries.map((ind, i) => (
+              <ScrollReveal key={ind.name} delay={i * 40}>
+                <span className="industry-pill">
+                  <span role="img" aria-label={ind.name}>{ind.icon}</span>
+                  {ind.name}
+                </span>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════ TESTIMONIALS — VEX testimonial cards ══════ */}
+      <section className="vex-section vex-section--light" aria-label="Client testimonials">
+        <div className="vex-container">
+          <ScrollReveal>
+            <div className="mb-8">
+              <p className="vex-eyebrow">Client Stories</p>
+              <h2 className="vex-heading">
+                Trusted by businesses<br />that need to scale.
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="vex-grid vex-grid--3">
+            {clientTestimonials.map((t, i) => (
+              <ScrollReveal key={t.name} delay={i * 120}>
+                <blockquote className="testimonial-card">
+                  <span className="quote-mark" aria-hidden="true">&ldquo;</span>
+                  <p className="testimonial-card__quote">
+                    {t.quote}
+                  </p>
+                  <footer>
+                    <strong className="testimonial-card__name">{t.name}</strong>
+                    <span className="testimonial-card__role">{t.role}</span>
+                  </footer>
+                </blockquote>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════ CTA — Full-bleed video ══════ */}
+      <section className="section-full section-full--half" aria-label="Get started">
+        <div className="section-media">
+          <img src="/home-hero.jpg" alt="Virtual Experts team" loading="lazy" />
+        </div>
+        <div className="section-content section-content--center">
+          <h2 className="text-section-video mb-4">
+            Ready to build your<br />remote team?
+          </h2>
+          <p className="text-lg text-white/70 max-w-xl mb-8 leading-relaxed">
+            Start with a conversation. We&apos;ll scope the role, match the
+            talent, and handle the rest.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link href="/contact" className="btn btn-overlay-primary">
+              Send an Inquiry
+            </Link>
+            <a
+              href={businessProfile.whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-overlay-secondary"
+            >
+              Chat on WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

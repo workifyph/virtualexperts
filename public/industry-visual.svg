@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#171411"/>
+      <stop offset="100%" stop-color="#34291e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#d2a44d"/>
+      <stop offset="100%" stop-color="#8d6823"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="760" height="520" rx="28" fill="url(#bg)"/>
+  <circle cx="638" cy="90" r="96" fill="#fff" opacity=".05"/>
+  <circle cx="120" cy="438" r="104" fill="#c79b44" opacity=".08"/>
+  <rect x="52" y="52" width="656" height="416" rx="30" fill="#fff" opacity=".04" stroke="#fff" stroke-opacity=".08"/>
+  <rect x="94" y="88" width="572" height="344" rx="28" fill="#fff" opacity=".03"/>
+
+  <g fill="none" stroke="#c79b44" stroke-width="8" stroke-linecap="round" opacity=".9">
+    <path d="M322 172c24 0 40 11 57 34l25 41"/>
+    <path d="M438 172c-24 0-40 11-57 34l-25 41"/>
+    <path d="M322 348c24 0 40-11 57-34l25-41"/>
+    <path d="M438 348c-24 0-40-11-57-34l-25-41"/>
+  </g>
+
+  <circle cx="380" cy="260" r="74" fill="url(#gold)"/>
+  <circle cx="380" cy="260" r="52" fill="#b88935" opacity=".45"/>
+  <text x="380" y="248" text-anchor="middle" fill="#fff8ef" font-family="Arial, sans-serif" font-size="12.5" font-weight="700" letter-spacing="2.4">REMOTE</text>
+  <text x="380" y="274" text-anchor="middle" fill="#fff8ef" font-family="Arial, sans-serif" font-size="12.5" font-weight="700" letter-spacing="2.4">SUPPORT</text>
+
+  <g>
+    <rect x="98" y="122" width="224" height="108" rx="24" fill="#fff" opacity=".96"/>
+    <circle cx="148" cy="158" r="20" fill="#f5e3bf"/>
+    <path d="M139 153c4-8 10-12 18-12 8 0 14 4 18 12" fill="none" stroke="#8d6823" stroke-width="4" stroke-linecap="round"/>
+    <path d="M142 171c5 5 12 7 19 7 7 0 14-2 19-7" fill="none" stroke="#8d6823" stroke-width="4" stroke-linecap="round"/>
+    <text x="182" y="156" fill="#8d6823" font-family="Arial, sans-serif" font-size="13" font-weight="800">DENTAL CLINICS</text>
+    <text x="182" y="178" fill="#6e665d" font-family="Arial, sans-serif" font-size="9.5" font-weight="500">
+      <tspan x="182" dy="0">Scheduling and</tspan>
+      <tspan x="182" dy="14">reminders for</tspan>
+      <tspan x="182" dy="14">patient calls</tspan>
+    </text>
+  </g>
+
+  <g>
+    <rect x="438" y="122" width="224" height="108" rx="24" fill="#fff" opacity=".96"/>
+    <circle cx="476" cy="158" r="20" fill="#f5e3bf"/>
+    <path d="M467 170h18v-20" fill="none" stroke="#8d6823" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M468 160l8-8 9 9" fill="none" stroke="#8d6823" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="526" y="156" fill="#8d6823" font-family="Arial, sans-serif" font-size="13" font-weight="800">REAL ESTATE</text>
+    <text x="526" y="178" fill="#6e665d" font-family="Arial, sans-serif" font-size="9.5" font-weight="500">
+      <tspan x="526" dy="0">Lead response and</tspan>
+      <tspan x="526" dy="14">follow-up for</tspan>
+      <tspan x="526" dy="14">admin tasks</tspan>
+    </text>
+  </g>
+
+  <g>
+    <rect x="98" y="298" width="224" height="108" rx="24" fill="#fff" opacity=".96"/>
+    <circle cx="148" cy="334" r="20" fill="#f5e3bf"/>
+    <rect x="138" y="325" width="20" height="18" rx="4" fill="none" stroke="#8d6823" stroke-width="4"/>
+    <path d="M134 346h28" fill="none" stroke="#8d6823" stroke-width="4" stroke-linecap="round"/>
+    <text x="182" y="332" fill="#8d6823" font-family="Arial, sans-serif" font-size="13" font-weight="800">PROPERTY MGMT</text>
+    <text x="182" y="354" fill="#6e665d" font-family="Arial, sans-serif" font-size="9.5" font-weight="500">
+      <tspan x="182" dy="0">Tenant updates and</tspan>
+      <tspan x="182" dy="14">communication for</tspan>
+      <tspan x="182" dy="14">daily operations</tspan>
+    </text>
+  </g>
+
+  <g>
+    <rect x="438" y="298" width="224" height="108" rx="24" fill="#fff" opacity=".96"/>
+    <circle cx="476" cy="334" r="20" fill="#f5e3bf"/>
+    <path d="M466 338l8-16 8 16" fill="none" stroke="#8d6823" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M468 338h12" fill="none" stroke="#8d6823" stroke-width="4" stroke-linecap="round"/>
+    <text x="526" y="332" fill="#8d6823" font-family="Arial, sans-serif" font-size="13" font-weight="800">HOME SERVICES</text>
+    <text x="526" y="354" fill="#6e665d" font-family="Arial, sans-serif" font-size="9.5" font-weight="500">
+      <tspan x="526" dy="0">Booking, dispatch,</tspan>
+      <tspan x="526" dy="14">and service</tspan>
+      <tspan x="526" dy="14">coordination</tspan>
+    </text>
+  </g>
+</svg>
