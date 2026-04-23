@@ -103,14 +103,14 @@ export const corePrinciples: PillarItem[] = [
 
 export const clientTestimonials: TestimonialItem[] = [
   {
-    name: "Brian A.",
-    role: "Long-term client partner",
-    quote: "I have used a variety of outsourced centers throughout my career. I have found Virtual Experts to be among the best and most responsive. They have always been accommodating to meet our needs and have been a fantastic resource and partner through the years. I highly recommend Virtual Experts to any firm looking to outsource.",
-  },
-  {
     name: "Dominique C.",
     role: "Scaling business owner",
     quote: "We have been working with Virtual Experts PH over the past eight years. They handle all the recruiting, HR, and management work behind the scenes so we can focus on growing the business. We have probably hired 300+ people through their firm. It has been a remarkable experience.",
+  },
+  {
+    name: "Brian A.",
+    role: "Long-term client partner",
+    quote: "I have used a variety of outsourced centers throughout my career. I have found Virtual Experts to be among the best and most responsive. They have always been accommodating to meet our needs and have been a fantastic resource and partner through the years. I highly recommend Virtual Experts to any firm looking to outsource.",
   },
   {
     name: "Isaac P.",

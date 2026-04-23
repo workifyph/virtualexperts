@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
   const { brand, nav } = siteConfig;
 
   useEffect(() => {
@@ -50,18 +52,23 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden items-center gap-8 md:flex">
-          {nav.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`text-sm font-medium tracking-wide no-underline transition-colors duration-300 hover:text-[var(--gold)] ${
-                scrolled ? "text-[var(--ink-soft)]" : "text-white/90"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+        <div className="hidden items-center gap-8 lg:flex">
+          {nav.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-medium tracking-wide no-underline transition-colors duration-300 hover:text-[var(--gold)] ${
+                  isActive
+                    ? "text-[var(--gold)] font-semibold"
+                    : scrolled ? "text-[var(--ink-soft)]" : "text-white/90"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
           <Link href="/contact" className="btn btn-primary text-xs">
             Get Started
           </Link>
@@ -70,7 +77,7 @@ export default function Header() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className={`relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden ${
+          className={`relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden ${
             scrolled || menuOpen ? "text-[var(--ink)]" : "text-white"
           }`}
           aria-label="Toggle menu"
@@ -99,7 +106,7 @@ export default function Header() {
 
       {/* Mobile menu overlay */}
       <div
-        className={`fixed inset-0 top-0 bg-[var(--bg)] transition-all duration-500 md:hidden ${
+        className={`fixed inset-0 top-0 bg-[var(--bg)] transition-all duration-500 lg:hidden ${
           menuOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import HeroCarousel from "@/components/HeroCarousel";
+import ScrollReveal from "@/components/ScrollReveal";
 import {
   StatsBar,
   ServiceGrid,
-  VideoSection,
   StepsGrid,
   IndustryPills,
   TestimonialGrid,
@@ -20,6 +20,8 @@ import {
   howModelWorks,
 } from "@/content/siteData";
 
+const featuredServices = services.slice(0, 3);
+
 export default function Home() {
   const { brand, contact } = siteConfig;
 
@@ -27,7 +29,7 @@ export default function Home() {
     <>
       {/* Hero Carousel */}
       <HeroCarousel slides={heroSlides} interval={7000}>
-        <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>
+        <p className="vex-eyebrow">
           {brand.name}
         </p>
         <h1 className="text-hero-video mb-6">
@@ -56,35 +58,45 @@ export default function Home() {
         eyebrow="What We Do"
         heading="Structured support,<br/>tailored to your business."
         description="From customer calls to back-office workflows, our managed teams handle the work so you can focus on growth."
-        services={services}
+        services={featuredServices}
         ctaLabel="View All Services"
         ctaHref="/services"
       />
 
-      {/* Differentiator Video Section */}
-      <VideoSection src="/video-02.mp4" poster="/video-02-poster.jpg">
-        <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>
-          The VEX Difference
-        </p>
-        <h2 className="text-section-video mb-8">
-          Not freelancers.<br />Not a generic agency.
-        </h2>
-        <div className="vex-grid vex-grid--3" style={{ maxWidth: "56rem", width: "100%" }}>
-          {advantagePillars.map((pillar) => (
-            <div key={pillar.title} className="service-panel" style={{
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.08)",
-            }}>
-              <h3 className="service-panel__title" style={{ color: "#fffaf0" }}>
-                {pillar.title}
-              </h3>
-              <p className="service-panel__body" style={{ color: "rgba(255,248,239,0.75)" }}>
-                {pillar.body}
-              </p>
+      {/* Differentiator — editorial layout */}
+      <section className="vex-section vex-section--dark" aria-label="The VEX Difference">
+        <div className="vex-container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "var(--s-8)" }}>
+            <ScrollReveal>
+              <p className="vex-eyebrow">The VEX Difference</p>
+              <h2 className="vex-heading" style={{ fontSize: "var(--text-hero)", maxWidth: "20ch" }}>
+                Not freelancers.<br />Not a generic agency.
+              </h2>
+            </ScrollReveal>
+
+            <div className="vex-grid vex-grid--3">
+              {advantagePillars.map((pillar, i) => (
+                <ScrollReveal key={pillar.title} delay={i * 100}>
+                  <div>
+                    <h3 style={{
+                      fontFamily: "var(--display)",
+                      fontSize: "var(--text-card-title)",
+                      fontWeight: 700,
+                      color: "#fffaf0",
+                      marginBottom: "var(--s-2)",
+                    }}>{pillar.title}</h3>
+                    <p style={{
+                      color: "rgba(255,248,239,0.7)",
+                      fontSize: "var(--text-body)",
+                      lineHeight: 1.65,
+                    }}>{pillar.body}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
-      </VideoSection>
+      </section>
 
       {/* How It Works */}
       <StepsGrid

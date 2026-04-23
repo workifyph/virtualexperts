@@ -47,20 +47,22 @@ function FaqAccordionItem({ item, isOpen, onToggle }: {
       </button>
       <div
         style={{
-          overflow: "hidden",
-          maxHeight: isOpen ? "500px" : "0",
-          transition: "max-height 0.4s ease, opacity 0.3s ease",
+          display: "grid",
+          gridTemplateRows: isOpen ? "1fr" : "0fr",
           opacity: isOpen ? 1 : 0,
+          transition: "grid-template-rows 0.4s ease, opacity 0.3s ease",
         }}
       >
-        <p style={{
-          marginTop: "0.75rem",
-          color: "var(--muted)",
-          fontSize: "var(--text-body)",
-          lineHeight: 1.7,
-        }}>
-          {item.answer}
-        </p>
+        <div style={{ overflow: "hidden" }}>
+          <p style={{
+            marginTop: "0.75rem",
+            color: "var(--muted)",
+            fontSize: "var(--text-body)",
+            lineHeight: 1.7,
+          }}>
+            {item.answer}
+          </p>
+        </div>
       </div>
     </div>
   );

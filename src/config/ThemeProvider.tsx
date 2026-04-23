@@ -24,6 +24,8 @@ export function ThemeStyles() {
   --charcoal-soft: ${colors.charcoalSoft};
   --display: ${typography.display};
   --sans: ${typography.sans};
+  --bg-charcoal: ${colors.charcoal};
+  --content-max: 1320px;
 }`;
 
   return <style dangerouslySetInnerHTML={{ __html: css }} />;

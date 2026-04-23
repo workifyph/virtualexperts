@@ -38,7 +38,7 @@ export default function AboutPage() {
           <img src="/about-hero.png" alt="Team in office meeting" style={{ filter: "brightness(0.7) blur(1px)" }} />
         </div>
         <div className="section-content section-content--center">
-          <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>About {brand.shortName}</p>
+          <p className="vex-eyebrow">About {brand.shortName}</p>
           <h1 className="text-hero-video">
             Built on trust.<br />Driven by results.
           </h1>
@@ -47,17 +47,17 @@ export default function AboutPage() {
 
       {/* Story */}
       <section className="vex-section" aria-label="Our story">
-        <div className="vex-container" style={{ textAlign: "center" }}>
+        <div className="vex-container">
           <ScrollReveal>
             <p className="vex-eyebrow">Since 2017</p>
-            <h2 className="vex-heading" style={{ maxWidth: "28ch", marginInline: "auto" }}>
+            <h2 className="vex-heading" style={{ maxWidth: "28ch" }}>
               A founder-led company with a long-term view.
             </h2>
-            <p className="vex-description" style={{ maxWidth: "64ch", marginInline: "auto", marginBottom: "var(--s-4)" }}>
+            <p className="vex-description" style={{ maxWidth: "64ch", marginBottom: "var(--s-4)" }}>
               {brand.name} was founded with a simple premise: service-led businesses deserve
               remote support that&apos;s structured, supervised, and built to last.
             </p>
-            <p className="vex-description" style={{ maxWidth: "64ch", marginInline: "auto" }}>
+            <p className="vex-description" style={{ maxWidth: "64ch" }}>
               Today we operate a 400-person talent pool combining onsite and remote delivery
               to support teams across 13+ industries — from dental clinics to real estate,
               property management to e-commerce.
@@ -79,38 +79,12 @@ export default function AboutPage() {
           <div className="vex-grid vex-grid--2" style={{ marginTop: "var(--s-8)" }}>
             {teamMembers.map((f, i) => (
               <ScrollReveal key={f.name} delay={i * 150}>
-                <div style={{
-                  borderRadius: "1.5rem",
-                  overflow: "hidden",
-                  background: "#000",
-                }}>
-                  <img
-                    src={f.image}
-                    alt={f.name}
-                    loading="lazy"
-                    style={{
-                      width: "100%",
-                      aspectRatio: "3 / 4",
-                      objectFit: "cover",
-                      objectPosition: "center 15%",
-                      display: "block",
-                    }}
-                  />
-                </div>
-                <div style={{ marginTop: "var(--s-4)", textAlign: "center" }}>
-                  <h3 style={{
-                    fontFamily: "var(--display)",
-                    fontWeight: 700,
-                    fontSize: "1.2rem",
-                    marginBottom: "0.15rem",
-                  }}>{f.name}</h3>
-                  <p style={{
-                    textTransform: "uppercase",
-                    letterSpacing: "0.14em",
-                    fontSize: "var(--text-eyebrow)",
-                    fontWeight: 800,
-                    color: "var(--gold-deep)",
-                  }}>{f.role}</p>
+                <div className="founder-card">
+                  <div className="founder-card__portrait">
+                    <img src={f.image} alt={f.name} loading="lazy" />
+                  </div>
+                  <h3 className="founder-card__name">{f.name}</h3>
+                  <p className="founder-card__role">{f.role}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -141,7 +115,7 @@ export default function AboutPage() {
 
       {/* Why Filipino */}
       <VideoSection src="/video-02.mp4" poster="/video-02-poster.jpg">
-        <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>
+        <p className="vex-eyebrow">
           Why the Philippines
         </p>
         <h2 className="text-section-video mb-10">
@@ -149,12 +123,9 @@ export default function AboutPage() {
         </h2>
         <div className="vex-grid vex-grid--2" style={{ maxWidth: "48rem", width: "100%" }}>
           {whyFilipino.map((w) => (
-            <div key={w.title} className="service-panel" style={{
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.08)",
-            }}>
-              <h3 className="service-panel__title" style={{ color: "#fffaf0" }}>{w.title}</h3>
-              <p className="service-panel__body" style={{ color: "rgba(255,248,239,0.75)" }}>{w.body}</p>
+            <div key={w.title} className="service-panel">
+              <h3 className="service-panel__title">{w.title}</h3>
+              <p className="service-panel__body">{w.body}</p>
             </div>
           ))}
         </div>
