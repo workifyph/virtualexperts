@@ -130,7 +130,7 @@ export default function Home() {
         primaryHref="/contact"
         secondaryLabel="Chat on WhatsApp"
         secondaryHref={contact.whatsappLink}
-        image="/home-hero.jpg"
+        image="/cta-hero.png"
       />
     </>
   );

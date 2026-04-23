@@ -17,8 +17,11 @@ export default function CaseStudiesPage() {
       <VideoSection src="/welcome-video.mp4" poster="/welcome-video-poster.jpg" halfHeight>
         <p className="vex-eyebrow" style={{ color: "rgba(255,231,189,0.82)" }}>Case Studies</p>
         <h1 className="text-hero-video">
-          Real results.<br />Real businesses.
+          From bottlenecks to scale —<br />real client results.
         </h1>
+        <p className="max-w-xl text-lg text-white/75 mt-6 leading-relaxed">
+          See how businesses streamline operations and grow with dedicated remote teams.
+        </p>
       </VideoSection>
 
       {/* Cases */}

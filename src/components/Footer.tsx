@@ -5,7 +5,7 @@ export default function Footer() {
   const { brand, nav, social, contact } = siteConfig;
 
   return (
-    <footer className="bg-[var(--bg-charcoal)] text-white/70">
+    <footer className="bg-[var(--charcoal)] text-white/70">
       <div className="mx-auto max-w-[var(--content-max)] px-6 py-16">
         <div className="grid gap-12 md:grid-cols-4">
           {/* Brand */}

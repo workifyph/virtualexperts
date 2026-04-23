@@ -53,13 +53,13 @@ export const services: ServiceItem[] = [
     slug: "on-call-support",
     title: "On-Call VA Support",
     description: "Flexible, project-based help starting at $6/hour.",
-    image: "/home-feature-cst.png",
+    image: "/service-oncall.png",
   },
   {
     slug: "recruitment",
     title: "Recruitment Support",
     description: "End-to-end sourcing, screening, and candidate matching.",
-    image: "/home-feature-dgp.png",
+    image: "/service-recruitment.png",
   },
 ];
 
