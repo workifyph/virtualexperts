@@ -38,6 +38,19 @@ export default function ScrollReveal({
     );
 
     observer.observe(el);
+
+    // Reveal immediately if already in viewport (deep-linked page loads)
+    requestAnimationFrame(() => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        setTimeout(() => {
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
+        }, delay);
+        observer.unobserve(el);
+      }
+    });
+
     return () => observer.disconnect();
   }, [delay]);
 

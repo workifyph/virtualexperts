@@ -54,7 +54,7 @@ export default function AboutPage() {
               A founder-led company with a long-term view.
             </h2>
             <p className="vex-description" style={{ maxWidth: "64ch", marginBottom: "var(--s-4)" }}>
-              {brand.name} was founded with a simple premise: service-led businesses deserve
+              Virtual Experts Philippines was founded with a simple premise: service-led businesses deserve
               remote support that&apos;s structured, supervised, and built to last.
             </p>
             <p className="vex-description" style={{ maxWidth: "64ch" }}>

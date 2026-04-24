@@ -91,7 +91,7 @@ export default function HeroCarousel({
               muted
               playsInline
               poster={slide.poster || undefined}
-              preload="auto"
+              preload="metadata"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             >
               <source src={slide.src} type="video/mp4" />

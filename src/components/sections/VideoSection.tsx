@@ -20,7 +20,7 @@ export default function VideoSection({
     >
       <div className="section-media">
         {src ? (
-          <video autoPlay muted loop playsInline poster={poster} preload="auto">
+          <video autoPlay muted loop playsInline poster={poster} preload="metadata">
             <source src={src} type="video/mp4" />
           </video>
         ) : image ? (

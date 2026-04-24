@@ -41,7 +41,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+    <form onSubmit={handleSubmit} method="post" action="/api/inquiries" className="flex flex-col gap-5">
       <div>
         <label htmlFor="name" className="mb-1 block text-sm font-medium text-[var(--ink-soft)]">
           Full name

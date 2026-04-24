@@ -30,7 +30,7 @@ export default function ServicesPage() {
       {/* Hero */}
       <section className="section-full section-full--half" aria-label="Services hero">
         <div className="section-media">
-          <video autoPlay muted loop playsInline poster="/welcome-video-poster.jpg" preload="auto">
+          <video autoPlay muted loop playsInline poster="/welcome-video-poster.jpg" preload="metadata">
             <source src="/welcome-video.mp4" type="video/mp4" />
           </video>
         </div>

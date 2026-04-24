@@ -24,7 +24,7 @@ export default function CtaBanner({
     <section className="section-full section-full--half" aria-label="Call to action">
       <div className="section-media">
         {video ? (
-          <video autoPlay muted loop playsInline preload="auto">
+          <video autoPlay muted loop playsInline preload="metadata">
             <source src={video} type="video/mp4" />
           </video>
         ) : image ? (
