@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import SiteChrome from "@/components/SiteChrome";
 import { siteConfig } from "@/config";
 import { ThemeStyles } from "@/config/ThemeProvider";
 import "./globals.css";
@@ -68,15 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="antialiased">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--gold)] focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold"
-        >
-          Skip to content
-        </a>
-        <Header />
-        <main id="main-content">{children}</main>
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

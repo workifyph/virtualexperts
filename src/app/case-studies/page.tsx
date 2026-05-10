@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import { VideoSection } from "@/components/sections";
-import { caseStudies } from "@/content/siteData";
+import { caseStudies as fallbackCaseStudies } from "@/content/siteData";
+import { getAllCaseStudies } from "@/lib/sanity/fetch";
+import { urlFor } from "@/lib/sanity/image";
 
 export const metadata: Metadata = {
   title: "Case Studies",
@@ -10,7 +12,10 @@ export const metadata: Metadata = {
     "See how our remote teams have helped businesses improve operations and reduce missed opportunities.",
 };
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage() {
+  const sanityCases = await getAllCaseStudies();
+  const useSanity = sanityCases.length > 0;
+
   return (
     <>
       {/* Hero */}
@@ -28,22 +33,52 @@ export default function CaseStudiesPage() {
       <section className="vex-section" aria-label="Case study details">
         <div className="vex-container">
           <div className="vex-grid vex-grid--3">
-            {caseStudies.map((cs, i) => (
-              <ScrollReveal key={cs.slug} delay={i * 120}>
-                <article className="case-card">
-                  <p className="case-card__industry">{cs.industry}</p>
-                  <h2 className="case-card__title">{cs.title}</h2>
-                  <dl>
-                    <dt>Challenge</dt>
-                    <dd>{cs.challenge}</dd>
-                    <dt>Approach</dt>
-                    <dd>{cs.approach}</dd>
-                    <dt>Outcome</dt>
-                    <dd>{cs.outcome}</dd>
-                  </dl>
-                </article>
-              </ScrollReveal>
-            ))}
+            {useSanity
+              ? sanityCases.map((cs, i) => {
+                  const img = cs.featuredImage?.asset
+                    ? urlFor(cs.featuredImage).width(720).height(420).fit("crop").auto("format").url()
+                    : null;
+                  return (
+                    <ScrollReveal key={cs._id} delay={i * 120}>
+                      <Link href={`/case-studies/${cs.slug}`} className="case-card" style={{ display: "block" }}>
+                        {img ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={img}
+                            alt={cs.featuredImage?.alt || cs.title}
+                            loading="lazy"
+                            style={{
+                              width: "100%",
+                              height: "200px",
+                              objectFit: "cover",
+                              borderRadius: "var(--radius-card)",
+                              marginBottom: "var(--s-4)",
+                            }}
+                          />
+                        ) : null}
+                        <p className="case-card__industry">{cs.clientIndustry}</p>
+                        <h2 className="case-card__title">{cs.title}</h2>
+                        <p style={{ marginTop: "var(--s-3)" }}>{cs.excerpt}</p>
+                      </Link>
+                    </ScrollReveal>
+                  );
+                })
+              : fallbackCaseStudies.map((cs, i) => (
+                  <ScrollReveal key={cs.slug} delay={i * 120}>
+                    <article className="case-card">
+                      <p className="case-card__industry">{cs.industry}</p>
+                      <h2 className="case-card__title">{cs.title}</h2>
+                      <dl>
+                        <dt>Challenge</dt>
+                        <dd>{cs.challenge}</dd>
+                        <dt>Approach</dt>
+                        <dd>{cs.approach}</dd>
+                        <dt>Outcome</dt>
+                        <dd>{cs.outcome}</dd>
+                      </dl>
+                    </article>
+                  </ScrollReveal>
+                ))}
           </div>
         </div>
       </section>
