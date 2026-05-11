@@ -44,9 +44,13 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # head_commit.message can be multiline and contain shell-special chars;
+          # pass it via env, then strip to first line at runtime.
+          RAW_COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
+          msg=$(printf '%s' "$RAW_COMMIT_MSG" | head -n1)
           npx wrangler@4 pages deploy out \
             --project-name=virtualexperts \
             --branch=main \
             --commit-hash=${{ github.sha }} \
-            --commit-message="${{ github.event.head_commit.message }}"
+            --commit-message="$msg"
