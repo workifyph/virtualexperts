@@ -6,12 +6,16 @@ let _client: SanityClient | null = null;
 export function getClient(): SanityClient | null {
   if (!isSanityConfigured) return null;
   if (_client) return _client;
+  // SANITY_API_READ_TOKEN is only set during CI builds — never bundled to the
+  // client. fetch.ts only runs at build time so this is safe.
+  const token = process.env.SANITY_API_READ_TOKEN;
   _client = createClient({
     projectId,
     dataset,
     apiVersion,
-    useCdn: true,
+    useCdn: false,
     perspective: "published",
+    token: token || undefined,
   });
   return _client;
 }
