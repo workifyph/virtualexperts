@@ -61,8 +61,13 @@ approved branch merge.
 
 | Environment | Branch | Cloudflare Pages project   | Domain                     | Sanity dataset |
 | ----------- | ------ | -------------------------- | -------------------------- | -------------- |
-| Development | `dev`  | `virtualexperts-dev`       | `dev.virtualexperts.ph`    | `production`   |
-| Production  | `main` | `virtualexperts`           | `virtualexperts.ph`        | `production`   |
+| Development | `dev`  | `virtualexperts-preview`   | `dev.virtualexperts.ph`    | `production`   |
+| Production  | `main` | `virtualexperts`           | `virtualexperts.ph`, `www.virtualexperts.ph` | `production`   |
+
+> The dev project is named `virtualexperts-preview` for historical reasons —
+> Cloudflare Pages does not support renaming projects. Its production-branch
+> field is set to `dev`, so the custom-domain alias `dev.virtualexperts.ph`
+> serves dev-branch deploys.
 
 > Both environments currently read the **same** Sanity dataset (Option A in
 > the rollback notes below). Editors stage with **drafts** in Sanity; only
@@ -198,7 +203,50 @@ Migration is roughly:
 | Sanity dataset                | `production`                               |
 | Sanity API version            | `2025-01-01`                               |
 | Sanity org                    | `Workify.ph.hq@gmail.com`                  |
+| Sanity webhook id             | `DdtAZLnqwBKXkah8` — "Deploy to dev on publish" |
 | Cloudflare account            | `Workify.ph.hq@gmail.com`                  |
+| Cloudflare account ID         | `8989d421b40e5722753ce9378579c5ff`         |
+| Cloudflare zone ID            | `c4c53c15e255d0ed3bf6b83e262317a8` (virtualexperts.ph) |
+| Prod Pages project            | `virtualexperts`                           |
+| Dev Pages project             | `virtualexperts-preview` (production_branch = `dev`) |
 | GitHub repo                   | `workifyph/virtualexperts`                 |
 | Default branch                | `main`                                     |
 | Dev branch                    | `dev`                                      |
+| GitHub Environment (prod gate)| `production` — required reviewer: `workifyph` |
+
+## CI secrets in GitHub Actions
+
+Set under **Repo → Settings → Secrets and variables → Actions**:
+
+| Secret                            | Source                          |
+| --------------------------------- | ------------------------------- |
+| `CLOUDFLARE_API_TOKEN`            | Custom token: Pages:Edit, DNS:Edit, Zone:Read |
+| `CLOUDFLARE_ACCOUNT_ID`           | `8989d421b40e5722753ce9378579c5ff` |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID`   | `r44epy9f`                      |
+| `NEXT_PUBLIC_SANITY_DATASET`      | `production`                    |
+| `NEXT_PUBLIC_SANITY_API_VERSION`  | `2025-01-01`                    |
+
+To rotate the Cloudflare token: create new at <https://dash.cloudflare.com/profile/api-tokens>, then
+`gh secret set CLOUDFLARE_API_TOKEN -R workifyph/virtualexperts --body <new>`, then delete the old token in CF dashboard.
+
+## Sanity webhook → GitHub Actions
+
+The Sanity webhook `DdtAZLnqwBKXkah8` fires on `create | update | delete` of any
+`post` or `caseStudy` document. It POSTs to:
+`https://api.github.com/repos/workifyph/virtualexperts/dispatches`
+with `event_type: "sanity-publish"`, which triggers `deploy-dev.yml`.
+
+**Important note about its auth:** The webhook currently uses a token extracted
+from the `gh` CLI session (`gho_…`). It works but is tied to a CLI session
+that could expire or be rotated. **Action item:** replace with a dedicated
+fine-grained PAT scoped to `repo` (Actions: Write) on this repo only.
+Update with:
+
+```bash
+SANITY_TOKEN=$(node -e "console.log(require(process.env.HOME+'/.config/sanity/config.json').authToken)")
+NEW_GH_PAT=ghp_…
+curl -X PATCH "https://r44epy9f.api.sanity.io/v2025-01-01/hooks/projects/r44epy9f/DdtAZLnqwBKXkah8" \
+  -H "Authorization: Bearer $SANITY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{\"headers\":{\"Authorization\":\"Bearer $NEW_GH_PAT\",\"Accept\":\"application/vnd.github+json\"}}"
+```
