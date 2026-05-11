@@ -1,65 +1,137 @@
-import Image from "next/image";
+import Link from "next/link";
+import HeroCarousel from "@/components/HeroCarousel";
+import ScrollReveal from "@/components/ScrollReveal";
+import {
+  StatsBar,
+  ServiceGrid,
+  StepsGrid,
+  IndustryPills,
+  TestimonialGrid,
+  CtaBanner,
+} from "@/components/sections";
+import { siteConfig } from "@/config";
+import {
+  heroSlides,
+  trustStats,
+  services,
+  clientTestimonials,
+  advantagePillars,
+  servedIndustries,
+  howModelWorks,
+} from "@/content/siteData";
+
+const featuredServices = services.slice(0, 3);
 
 export default function Home() {
+  const { brand, contact } = siteConfig;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      {/* Hero Carousel */}
+      <HeroCarousel slides={heroSlides} interval={7000}>
+        <p className="vex-eyebrow">
+          {brand.name}
+        </p>
+        <h1 className="text-hero-video mb-6">
+          Your remote team,
+          <br />
+          built to perform.
+        </h1>
+        <p className="max-w-xl text-lg text-white/75 mb-10 leading-relaxed">
+          {brand.tagline}
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <Link href="/contact" className="btn btn-overlay-primary">
+            Start a Conversation
+          </Link>
+          <Link href="/services" className="btn btn-overlay-secondary">
+            Explore Services
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </HeroCarousel>
+
+      {/* Trust Stats */}
+      <StatsBar stats={trustStats} />
+
+      {/* Services */}
+      <ServiceGrid
+        eyebrow="What We Do"
+        heading="Structured support,<br/>tailored to your business."
+        description="From customer calls to back-office workflows, our managed teams handle the work so you can focus on growth."
+        services={featuredServices}
+        ctaLabel="View All Services"
+        ctaHref="/services"
+      />
+
+      {/* Differentiator — editorial layout */}
+      <section className="vex-section vex-section--dark" aria-label="The VEX Difference">
+        <div className="vex-container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "var(--s-8)" }}>
+            <ScrollReveal>
+              <p className="vex-eyebrow">The VEX Difference</p>
+              <h2 className="vex-heading" style={{ fontSize: "var(--text-hero)", maxWidth: "20ch" }}>
+                Not freelancers.<br />Not a generic agency.
+              </h2>
+            </ScrollReveal>
+
+            <div className="vex-grid vex-grid--3">
+              {advantagePillars.map((pillar, i) => (
+                <ScrollReveal key={pillar.title} delay={i * 100}>
+                  <div>
+                    <h3 style={{
+                      fontFamily: "var(--display)",
+                      fontSize: "var(--text-card-title)",
+                      fontWeight: 700,
+                      color: "#fffaf0",
+                      marginBottom: "var(--s-2)",
+                    }}>{pillar.title}</h3>
+                    <p style={{
+                      color: "rgba(255,248,239,0.7)",
+                      fontSize: "var(--text-body)",
+                      lineHeight: 1.65,
+                    }}>{pillar.body}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* How It Works */}
+      <StepsGrid
+        eyebrow="How It Works"
+        heading="Four steps to your<br/>dedicated team."
+        steps={howModelWorks}
+        variant="tan"
+        ctaLabel="Learn More"
+        ctaHref="/how-it-works"
+      />
+
+      {/* Industries */}
+      <IndustryPills
+        eyebrow="Industries"
+        heading="Support built for<br/>your industry."
+        industries={servedIndustries}
+      />
+
+      {/* Testimonials */}
+      <TestimonialGrid
+        eyebrow="Client Stories"
+        heading="Trusted by businesses<br/>that need to scale."
+        testimonials={clientTestimonials}
+      />
+
+      {/* CTA */}
+      <CtaBanner
+        heading="Ready to build your remote team?"
+        description="Start with a conversation. We'll scope the role, match the talent, and handle the rest."
+        primaryLabel="Send an Inquiry"
+        primaryHref="/contact"
+        secondaryLabel="Chat on WhatsApp"
+        secondaryHref={contact.whatsappLink}
+        image="/cta-hero.png"
+      />
+    </>
   );
 }
