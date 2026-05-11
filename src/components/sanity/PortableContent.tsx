@@ -6,21 +6,12 @@ const components: PortableTextComponents = {
   types: {
     image: ({ value }) => {
       if (!value?.asset) return null;
-      const url = urlFor(value).width(1200).fit("max").auto("format").url();
+      const url = urlFor(value).width(1400).fit("max").auto("format").url();
       return (
-        <figure className="my-8">
+        <figure>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={url}
-            alt={value.alt || ""}
-            loading="lazy"
-            className="w-full h-auto rounded-lg"
-          />
-          {value.caption ? (
-            <figcaption className="mt-2 text-sm text-[var(--ink-muted)]">
-              {value.caption}
-            </figcaption>
-          ) : null}
+          <img src={url} alt={value.alt || ""} loading="lazy" />
+          {value.caption ? <figcaption>{value.caption}</figcaption> : null}
         </figure>
       );
     },
@@ -33,7 +24,6 @@ const components: PortableTextComponents = {
         <a
           href={href}
           {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          className="underline underline-offset-4 text-[var(--gold-deep)] hover:opacity-80"
         >
           {children}
         </a>

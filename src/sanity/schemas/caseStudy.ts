@@ -40,11 +40,21 @@ export const caseStudy = defineType({
       type: "image",
       group: "content",
       options: { hotspot: true },
+      description:
+        "Shown at the top of the case study and on the case studies index.\n\n" +
+        "Image guidelines:\n" +
+        "• Use a clean editorial photograph that represents the client's industry or workflow.\n" +
+        "• Recommended ratio 16:9 (or 4:3). Avoid tall portrait images.\n" +
+        "• Minimum width 1600px for retina sharpness.\n" +
+        "• Never use marketing graphics, slides, screenshots, or images with baked-in text.\n" +
+        "• Use the hotspot tool to set the focal point so cropping looks right.",
       fields: [
         {
           name: "alt",
           type: "string",
           title: "Alt text",
+          description:
+            "Describe the image for screen readers and SEO. One short sentence.",
           validation: (Rule) => Rule.required(),
         },
       ],
