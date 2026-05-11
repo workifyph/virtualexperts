@@ -10,11 +10,20 @@ import { isSanityConfigured } from "@/sanity/env";
 //   2. Build size of all other pages stays unaffected.
 export const dynamic = "force-static";
 
+const STUDIO_ENABLED =
+  process.env.NEXT_PUBLIC_STUDIO_ENABLED === "true";
+
 export default function StudioPage() {
   const [Studio, setStudio] = useState<React.ReactNode | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!STUDIO_ENABLED) {
+      setError(
+        "The CMS Studio is not available on this environment. Editors should use the dev environment at https://dev.virtualexperts.ph/studio."
+      );
+      return;
+    }
     if (!isSanityConfigured) {
       setError(
         "Sanity is not configured. Set NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET, then redeploy."
