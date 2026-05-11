@@ -949,12 +949,14 @@ body {
   }
 }
 
-/* When the grid has a single card, constrain its width so it doesn't span
-   the full viewport awkwardly. */
+/* When the grid has a single card, place it in a left-aligned column the
+   same width as a normal card so it lines up with the page heading rather
+   than floating in the centre of the viewport. */
 .editorial-grid--single {
-  grid-template-columns: 1fr;
-  max-width: 520px;
-  margin: 0 auto;
+  grid-template-columns: minmax(0, 400px);
+  justify-content: start;
+  max-width: none;
+  margin: 0;
 }
 
 /* ====== Article hero (blog/case study detail) ====== */
