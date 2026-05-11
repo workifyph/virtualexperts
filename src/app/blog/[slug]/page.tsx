@@ -53,8 +53,8 @@ export default async function BlogPostPage({ params }: Props) {
   if (!post) {
     if (slug === PLACEHOLDER_SLUG) {
       return (
-        <section className="vex-section" aria-label="Coming soon">
-          <div className="vex-container" style={{ maxWidth: "720px", textAlign: "center" }}>
+        <section className="vex-section vex-section--editorial" aria-label="Coming soon">
+          <div className="vex-container vex-article" style={{ textAlign: "center" }}>
             <p className="vex-eyebrow">Blog</p>
             <h1 className="vex-heading">Coming soon</h1>
             <p className="vex-description">
@@ -71,53 +71,59 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const heroImg = post.featuredImage?.asset
-    ? urlFor(post.featuredImage).width(1600).height(900).fit("crop").auto("format").url()
+    ? urlFor(post.featuredImage)
+        .width(1600)
+        .height(900)
+        .fit("crop")
+        .auto("format")
+        .url()
     : null;
 
   return (
-    <>
-      <article className="vex-section" aria-label={post.title}>
-        <div className="vex-container" style={{ maxWidth: "820px" }}>
-          <ScrollReveal>
-            <p className="vex-eyebrow">
-              {post.category?.title ? `${post.category.title} · ` : ""}
-              {formatDate(post.publishedAt)}
-            </p>
-            <h1 className="vex-heading">{post.title}</h1>
-            <p className="vex-description">{post.excerpt}</p>
-          </ScrollReveal>
+    <article className="vex-section vex-section--editorial" aria-label={post.title}>
+      <div className="vex-container vex-article">
+        <ScrollReveal>
+          <p className="vex-eyebrow">{post.category?.title || "Blog"}</p>
+          <h1 className="vex-heading">{post.title}</h1>
+          <p className="vex-description" style={{ marginTop: "var(--s-4)" }}>
+            {post.excerpt}
+          </p>
+          <div className="article-meta">
+            {post.author?.name ? <span>By {post.author.name}</span> : null}
+            {post.author?.name ? <span className="article-meta__dot" aria-hidden /> : null}
+            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+          </div>
+        </ScrollReveal>
 
-          {heroImg ? (
-            <ScrollReveal>
+        {heroImg ? (
+          <ScrollReveal>
+            <div className="article-hero">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={heroImg}
                 alt={post.featuredImage?.alt || post.title}
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  borderRadius: "var(--radius-card)",
-                  margin: "var(--s-8) 0",
-                }}
               />
-            </ScrollReveal>
-          ) : null}
-
-          {post.body?.length ? (
-            <ScrollReveal>
-              <PortableContent value={post.body} />
-            </ScrollReveal>
-          ) : null}
-
-          <ScrollReveal>
-            <div style={{ marginTop: "var(--s-12)" }}>
-              <Link href="/blog" className="btn btn-ghost">
-                ← Back to all posts
-              </Link>
             </div>
           </ScrollReveal>
-        </div>
-      </article>
-    </>
+        ) : null}
+
+        {post.body?.length ? (
+          <ScrollReveal>
+            <PortableContent value={post.body} />
+          </ScrollReveal>
+        ) : null}
+
+        <ScrollReveal>
+          <nav className="article-nav" aria-label="Article navigation">
+            <Link href="/blog" className="btn btn-ghost">
+              ← Back to all posts
+            </Link>
+            <Link href="/contact" className="btn btn-primary">
+              Talk to us
+            </Link>
+          </nav>
+        </ScrollReveal>
+      </div>
+    </article>
   );
 }

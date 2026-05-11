@@ -5,11 +5,28 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config";
 
+// Routes whose top of page is a dark video/photo hero. On these we keep the
+// transparent header with white text until scroll. Everywhere else (blog,
+// case study detail, faq, studio fallback) the header sits on a beige
+// surface, so it always needs the opaque/dark-text treatment.
+const DARK_HERO_ROUTES = new Set([
+  "/",
+  "/services",
+  "/about",
+  "/contact",
+  "/how-it-works",
+  "/industries",
+  "/case-studies",
+]);
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const { brand, nav } = siteConfig;
+  const onDarkHero = pathname ? DARK_HERO_ROUTES.has(pathname) : false;
+  // When not on a dark hero, behave as if always scrolled (opaque bg + ink text).
+  const opaque = scrolled || menuOpen || !onDarkHero;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -29,7 +46,7 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled || menuOpen
+        opaque
           ? "bg-[var(--bg)]/95 backdrop-blur-lg shadow-sm"
           : "bg-transparent"
       }`}
@@ -44,7 +61,7 @@ export default function Header() {
           />
           <span
             className={`text-sm font-semibold tracking-wide transition-colors duration-500 ${
-              scrolled || menuOpen ? "text-[var(--ink)]" : "text-white"
+              opaque ? "text-[var(--ink)]" : "text-white"
             }`}
           >
             {brand.shortName}
@@ -62,7 +79,7 @@ export default function Header() {
                 className={`text-sm font-medium tracking-wide no-underline transition-colors duration-300 hover:text-[var(--gold)] ${
                   isActive
                     ? "text-[var(--gold)] font-semibold"
-                    : scrolled ? "text-[var(--ink-soft)]" : "text-white/90"
+                    : opaque ? "text-[var(--ink-soft)]" : "text-white/90"
                 }`}
               >
                 {link.label}
@@ -78,7 +95,7 @@ export default function Header() {
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className={`relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden ${
-            scrolled || menuOpen ? "text-[var(--ink)]" : "text-white"
+            opaque ? "text-[var(--ink)]" : "text-white"
           }`}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
@@ -87,7 +104,7 @@ export default function Header() {
             className={`block h-0.5 w-6 rounded transition-all duration-300 ${
               menuOpen
                 ? "translate-y-[4px] rotate-45 bg-[var(--ink)]"
-                : scrolled
+                : opaque
                 ? "bg-[var(--ink)]"
                 : "bg-white"
             }`}
@@ -96,7 +113,7 @@ export default function Header() {
             className={`block h-0.5 w-6 rounded transition-all duration-300 ${
               menuOpen
                 ? "-translate-y-[4px] -rotate-45 bg-[var(--ink)]"
-                : scrolled
+                : opaque
                 ? "bg-[var(--ink)]"
                 : "bg-white"
             }`}

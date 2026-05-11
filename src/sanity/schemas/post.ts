@@ -41,13 +41,21 @@ export const post = defineType({
       type: "image",
       group: "content",
       options: { hotspot: true },
-      description: "Shown at the top of the post and on the blog index.",
+      description:
+        "Shown at the top of the post and on the blog index.\n\n" +
+        "Image guidelines:\n" +
+        "• Use a clean editorial photograph — no text, logos, or banners baked in.\n" +
+        "• Recommended ratio 16:9 (or 4:3). Avoid tall portrait images.\n" +
+        "• Minimum width 1600px so the hero stays crisp on retina screens.\n" +
+        "• Avoid screenshots, slides, marketing graphics with overlay copy.\n" +
+        "• Use the hotspot tool to choose the focal point — the site will crop around it.",
       fields: [
         {
           name: "alt",
           type: "string",
           title: "Alt text",
-          description: "Describe the image for screen readers and SEO.",
+          description:
+            "Describe the image for screen readers and SEO. One short sentence, no quotes.",
           validation: (Rule) => Rule.required(),
         },
       ],

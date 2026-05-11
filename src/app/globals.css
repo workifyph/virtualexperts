@@ -838,3 +838,367 @@ body {
 
 /* ====== Selection ====== */
 ::selection { background: var(--gold-soft); color: var(--ink); }
+
+/* ==================================================================
+   Editorial — Blog & Case Study detail pages.
+   These pages have no dark hero; they sit on the beige page background
+   so the Header is forced opaque (see Header.tsx) and content has top
+   padding to clear the fixed nav.
+   ================================================================== */
+
+.vex-section--editorial {
+  padding-top: clamp(7rem, 12vw, 9rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.vex-article {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* ====== Editorial card (blog/case study index card) ====== */
+.editorial-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.editorial-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 24px 56px rgba(18, 17, 15, 0.12);
+}
+
+.editorial-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: var(--gold-soft);
+  overflow: hidden;
+}
+
+.editorial-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.editorial-card__media--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--gold-soft), var(--paper));
+  color: var(--gold-deep);
+  font-family: var(--display);
+  font-size: var(--text-section);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.editorial-card__body {
+  padding: var(--s-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  flex: 1;
+}
+
+.editorial-card__title {
+  font-family: var(--display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0;
+}
+
+.editorial-card__excerpt {
+  color: var(--muted);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  margin: 0;
+  /* clamp to 3 lines so cards stay even-height */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ====== Editorial grid: 1 col mobile, 2 col tablet, 3 col desktop ====== */
+.editorial-grid {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .editorial-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 960px) {
+  .editorial-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* When the grid has a single card, constrain its width so it doesn't span
+   the full viewport awkwardly. */
+.editorial-grid--single {
+  grid-template-columns: 1fr;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ====== Article hero (blog/case study detail) ====== */
+.article-hero {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  margin: var(--s-8) 0 var(--s-10);
+  background: var(--gold-soft);
+}
+
+.article-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  color: var(--ink-soft);
+  font-size: var(--text-small);
+}
+
+.article-meta__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* ====== Prose — long-form body content ====== */
+.prose-vex {
+  color: var(--ink);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.prose-vex > * + * { margin-top: 1.1em; }
+
+.prose-vex p { margin: 0; }
+
+.prose-vex strong { color: var(--ink); font-weight: 700; }
+
+.prose-vex h2 {
+  font-family: var(--display);
+  font-size: clamp(1.45rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 2.4em;
+  margin-bottom: 0.6em;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+
+.prose-vex h3 {
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  color: var(--ink);
+}
+
+.prose-vex h4 {
+  font-family: var(--display);
+  font-size: 1.075rem;
+  font-weight: 700;
+  margin-top: 1.6em;
+  margin-bottom: 0.4em;
+  color: var(--ink);
+}
+
+.prose-vex ul,
+.prose-vex ol {
+  padding-left: 1.4em;
+}
+.prose-vex ul { list-style: disc; }
+.prose-vex ol { list-style: decimal; }
+.prose-vex li { margin: 0.45em 0; }
+.prose-vex li::marker { color: var(--gold); }
+
+.prose-vex blockquote {
+  margin: 2em 0;
+  padding: 0.4em 0 0.4em 1.3em;
+  border-left: 3px solid var(--gold);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.prose-vex a {
+  color: var(--gold-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: opacity 160ms ease;
+}
+.prose-vex a:hover { opacity: 0.75; }
+
+.prose-vex code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--gold-soft);
+  padding: 0.1em 0.4em;
+  border-radius: 0.3em;
+  font-size: 0.92em;
+}
+
+.prose-vex figure {
+  margin: 2em 0;
+}
+.prose-vex figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  display: block;
+}
+.prose-vex figure figcaption {
+  margin-top: 0.6em;
+  text-align: center;
+  font-size: var(--text-small);
+  color: var(--muted);
+  font-style: italic;
+}
+
+.prose-vex hr {
+  border: none;
+  height: 1px;
+  background: var(--line);
+  margin: 3em 0;
+}
+
+/* ====== Case study results summary card ====== */
+.case-summary {
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--card-padding);
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+}
+
+.case-summary dt {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: var(--text-eyebrow);
+  font-weight: 800;
+  color: var(--gold-deep);
+  margin-bottom: 0.25rem;
+}
+
+.case-summary dd {
+  margin: 0 0 var(--s-4);
+  color: var(--ink);
+  font-size: var(--text-body);
+  line-height: 1.7;
+}
+.case-summary dd:last-child { margin-bottom: 0; }
+
+/* ====== Stats bar (case study detail) ====== */
+.stats-bar {
+  display: grid;
+  gap: var(--s-4);
+  margin: var(--s-10) 0;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .stats-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 860px) {
+  .stats-bar { grid-template-columns: repeat(var(--stats-cols, 3), minmax(0, 1fr)); }
+}
+
+.stats-bar__item {
+  text-align: center;
+  padding: var(--s-6) var(--s-4);
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+}
+
+.stats-bar__value {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.stats-bar__label {
+  display: block;
+  margin-top: var(--s-2);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: var(--text-eyebrow);
+  font-weight: 700;
+  color: var(--gold-deep);
+}
+
+/* ====== Pull-quote testimonial ====== */
+.pull-quote {
+  margin: var(--s-12) 0;
+  padding: var(--s-8) var(--s-6);
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, var(--gold-soft), rgba(255,255,255,0.5));
+  border: 1px solid rgba(199, 155, 68, 0.25);
+  text-align: center;
+}
+
+.pull-quote__text {
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0;
+  font-style: italic;
+}
+
+.pull-quote__attr {
+  margin-top: var(--s-4);
+  font-size: var(--text-small);
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+.pull-quote__attr strong { color: var(--ink); font-weight: 700; }
+
+/* ====== Article navigation footer ====== */
+.article-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-12);
+  padding-top: var(--s-8);
+  border-top: 1px solid var(--line);
+}
