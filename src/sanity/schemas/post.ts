@@ -15,7 +15,7 @@ export const post = defineType({
       type: "string",
       group: "content",
       description: "The headline shown on the blog and used as the page title.",
-      validation: (Rule) => Rule.required().min(8).max(120),
+      validation: (Rule) => Rule.required().min(8).max(250),
     }),
     defineField({
       name: "slug",
@@ -23,7 +23,7 @@ export const post = defineType({
       type: "slug",
       group: "content",
       description: "Auto-generated from the title. Edit only if you must.",
-      options: { source: "title", maxLength: 96 },
+      options: { source: "title", maxLength: 250 },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
