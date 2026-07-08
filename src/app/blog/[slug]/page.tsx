@@ -2,23 +2,22 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ScrollReveal from "@/components/ScrollReveal";
-import PortableContent from "@/components/sanity/PortableContent";
-import { getPostBySlug, getPostSlugs } from "@/lib/sanity/fetch";
-import { urlFor } from "@/lib/sanity/image";
+import MarkdownContent from "@/components/MarkdownContent";
+import { getPostBySlug, getPostSlugs } from "@/lib/content/posts";
 
 type Props = { params: Promise<{ slug: string }> };
 
 const PLACEHOLDER_SLUG = "coming-soon";
 
 export async function generateStaticParams() {
-  const slugs = await getPostSlugs();
+  const slugs = getPostSlugs();
   if (slugs.length === 0) return [{ slug: PLACEHOLDER_SLUG }];
   return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = getPostBySlug(slug);
   if (!post) {
     if (slug === PLACEHOLDER_SLUG) return { title: "Blog coming soon" };
     return { title: "Post not found" };
@@ -30,10 +29,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.seoTitle || post.title,
       description: post.seoDescription || post.excerpt,
       type: "article",
-      publishedTime: post.publishedAt,
-      images: post.featuredImage?.asset
-        ? [urlFor(post.featuredImage).width(1200).height(630).fit("crop").url()]
-        : undefined,
+      publishedTime: post.date,
+      images: post.image ? [post.image] : undefined,
     },
   };
 }
@@ -48,7 +45,7 @@ function formatDate(iso: string) {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = getPostBySlug(slug);
 
   if (!post) {
     if (slug === PLACEHOLDER_SLUG) {
@@ -70,46 +67,34 @@ export default async function BlogPostPage({ params }: Props) {
     notFound();
   }
 
-  const heroImg = post.featuredImage?.asset
-    ? urlFor(post.featuredImage)
-        .width(1600)
-        .height(900)
-        .fit("crop")
-        .auto("format")
-        .url()
-    : null;
-
   return (
     <article className="vex-section vex-section--editorial" aria-label={post.title}>
       <div className="vex-container vex-article">
         <ScrollReveal>
-          <p className="vex-eyebrow">{post.category?.title || "Blog"}</p>
+          <p className="vex-eyebrow">{post.category || "Blog"}</p>
           <h1 className="vex-heading">{post.title}</h1>
           <p className="vex-description" style={{ marginTop: "var(--s-4)" }}>
             {post.excerpt}
           </p>
           <div className="article-meta">
-            {post.author?.name ? <span>By {post.author.name}</span> : null}
-            {post.author?.name ? <span className="article-meta__dot" aria-hidden /> : null}
-            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+            {post.author ? <span>By {post.author}</span> : null}
+            {post.author ? <span className="article-meta__dot" aria-hidden /> : null}
+            <time dateTime={post.date}>{formatDate(post.date)}</time>
           </div>
         </ScrollReveal>
 
-        {heroImg ? (
+        {post.image ? (
           <ScrollReveal>
             <div className="article-hero">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={heroImg}
-                alt={post.featuredImage?.alt || post.title}
-              />
+              <img src={post.image} alt={post.imageAlt || post.title} />
             </div>
           </ScrollReveal>
         ) : null}
 
-        {post.body?.length ? (
+        {post.body ? (
           <ScrollReveal>
-            <PortableContent value={post.body} />
+            <MarkdownContent>{post.body}</MarkdownContent>
           </ScrollReveal>
         ) : null}
 

@@ -3,8 +3,7 @@ import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import { VideoSection } from "@/components/sections";
 import { caseStudies as fallbackCaseStudies } from "@/content/siteData";
-import { getAllCaseStudies } from "@/lib/sanity/fetch";
-import { urlFor } from "@/lib/sanity/image";
+import { getAllCaseStudies } from "@/lib/content/caseStudies";
 
 export const metadata: Metadata = {
   title: "Case Studies",
@@ -13,8 +12,8 @@ export const metadata: Metadata = {
 };
 
 export default async function CaseStudiesPage() {
-  const sanityCases = await getAllCaseStudies();
-  const useSanity = sanityCases.length > 0;
+  const caseStudies = getAllCaseStudies();
+  const hasCaseStudies = caseStudies.length > 0;
 
   return (
     <>
@@ -32,15 +31,13 @@ export default async function CaseStudiesPage() {
       {/* Cases */}
       <section className="vex-section" aria-label="Case study details">
         <div className="vex-container">
-          {useSanity ? (
-            <div className={`editorial-grid${sanityCases.length === 1 ? " editorial-grid--single" : ""}`}>
-              {sanityCases.map((cs, i) => {
-                const img = cs.featuredImage?.asset
-                  ? urlFor(cs.featuredImage).width(960).height(600).fit("crop").auto("format").url()
-                  : null;
+          {hasCaseStudies ? (
+            <div className={`editorial-grid${caseStudies.length === 1 ? " editorial-grid--single" : ""}`}>
+              {caseStudies.map((cs, i) => {
+                const img = cs.image || null;
                 const initial = cs.title.charAt(0).toUpperCase();
                 return (
-                  <ScrollReveal key={cs._id} delay={i * 120}>
+                  <ScrollReveal key={cs.slug} delay={i * 120}>
                     <Link
                       href={`/case-studies/${cs.slug}`}
                       className="editorial-card"
@@ -49,7 +46,7 @@ export default async function CaseStudiesPage() {
                       <div className="editorial-card__media">
                         {img ? (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={img} alt={cs.featuredImage?.alt || cs.title} loading="lazy" />
+                          <img src={img} alt={cs.imageAlt || cs.title} loading="lazy" />
                         ) : (
                           <div className="editorial-card__media editorial-card__media--placeholder">
                             {initial}

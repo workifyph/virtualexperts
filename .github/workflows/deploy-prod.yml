@@ -3,6 +3,11 @@ name: Deploy prod
 on:
   push:
     branches: [main]
+  schedule:
+    # Weekly rebuild (Mon 22:00 UTC = Tue 6am PH) so future-dated posts go
+    # live on prod. The run still waits for the production-environment
+    # approval before deploying.
+    - cron: "0 22 * * 1"
   workflow_dispatch: {}
 
 concurrency:
@@ -32,12 +37,6 @@ jobs:
         run: npm ci
 
       - name: Build (static export)
-        env:
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
-          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
-          NEXT_PUBLIC_SANITY_API_VERSION: ${{ secrets.NEXT_PUBLIC_SANITY_API_VERSION }}
-          SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}
-          NEXT_PUBLIC_STUDIO_ENABLED: "false"
         run: npm run build
 
       - name: Deploy to Cloudflare Pages (prod)

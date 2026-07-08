@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
-import { getAllPosts } from "@/lib/sanity/fetch";
-import { urlFor } from "@/lib/sanity/image";
+import { getAllPosts } from "@/lib/content/posts";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -19,7 +18,7 @@ function formatDate(iso: string) {
 }
 
 export default async function BlogIndexPage() {
-  const posts = await getAllPosts();
+  const posts = getAllPosts();
   const isSingle = posts.length === 1;
 
   return (
@@ -53,24 +52,16 @@ export default async function BlogIndexPage() {
         ) : (
           <div className={`editorial-grid${isSingle ? " editorial-grid--single" : ""}`}>
             {posts.map((post, i) => {
-              const imgUrl = post.featuredImage?.asset
-                ? urlFor(post.featuredImage)
-                    .width(960)
-                    .height(600)
-                    .fit("crop")
-                    .auto("format")
-                    .url()
-                : null;
               const initial = post.title.charAt(0).toUpperCase();
               return (
-                <ScrollReveal key={post._id} delay={i * 100}>
+                <ScrollReveal key={post.slug} delay={i * 100}>
                   <Link href={`/blog/${post.slug}`} className="editorial-card" aria-label={post.title}>
                     <div className="editorial-card__media">
-                      {imgUrl ? (
+                      {post.image ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
-                          src={imgUrl}
-                          alt={post.featuredImage?.alt || post.title}
+                          src={post.image}
+                          alt={post.imageAlt || post.title}
                           loading="lazy"
                         />
                       ) : (
@@ -81,7 +72,7 @@ export default async function BlogIndexPage() {
                     </div>
                     <div className="editorial-card__body">
                       <p className="case-card__industry">
-                        {post.category?.title || formatDate(post.publishedAt)}
+                        {post.category || formatDate(post.date)}
                       </p>
                       <h2 className="editorial-card__title">{post.title}</h2>
                       <p className="editorial-card__excerpt">{post.excerpt}</p>

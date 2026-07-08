@@ -1,4 +1,0 @@
-# Cloudflare Pages SPA fallback for Sanity Studio.
-# The Studio handles its own client-side routing under /studio/...,
-# so any sub-path must serve the same /studio HTML shell.
-/studio/* /studio 200
