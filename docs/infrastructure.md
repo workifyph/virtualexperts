@@ -212,7 +212,7 @@ Migration is roughly:
 | GitHub repo                   | `workifyph/virtualexperts`                 |
 | Default branch                | `main`                                     |
 | Dev branch                    | `dev`                                      |
-| GitHub Environment (prod gate)| `production` — required reviewer: `workifyph` |
+| GitHub Environment (prod gate)| `production` — approvers: `workifyph`, `aisaiah-ai`, `riohuelartechsupport-art`, `carmeladawn` (any one can approve) |
 
 ## CI secrets in GitHub Actions
 
