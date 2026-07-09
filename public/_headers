@@ -1,0 +1,14 @@
+# Cloudflare Pages header overrides.
+# Goal: HTML pages must revalidate every request so Sanity publishes
+# appear immediately after a redeploy. Static asset bundles keep a
+# long-lived immutable cache because Next.js hashes their filenames.
+
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+  CDN-Cache-Control: no-store
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_next/image*
+  Cache-Control: public, max-age=86400
