@@ -203,7 +203,7 @@ Migration is roughly:
 | Sanity dataset                | `production`                               |
 | Sanity API version            | `2025-01-01`                               |
 | Sanity org                    | `Workify.ph.hq@gmail.com`                  |
-| Sanity webhook id             | `DdtAZLnqwBKXkah8` — "Deploy to dev on publish" |
+| Sanity webhook id             | `DPfgDL3jB525Rcxu` — "Deploy to dev on publish" |
 | Cloudflare account            | `Workify.ph.hq@gmail.com`                  |
 | Cloudflare account ID         | `8989d421b40e5722753ce9378579c5ff`         |
 | Cloudflare zone ID            | `c4c53c15e255d0ed3bf6b83e262317a8` (virtualexperts.ph) |
@@ -231,7 +231,7 @@ To rotate the Cloudflare token: create new at <https://dash.cloudflare.com/profi
 
 ## Sanity webhook → GitHub Actions
 
-The Sanity webhook `DdtAZLnqwBKXkah8` fires on `create | update | delete` of any
+The Sanity webhook `DPfgDL3jB525Rcxu` fires on `create | update | delete` of any
 `post` or `caseStudy` document. It POSTs to:
 `https://api.github.com/repos/workifyph/virtualexperts/dispatches`
 with `event_type: "sanity-publish"`, which triggers `deploy-dev.yml`.
@@ -245,7 +245,7 @@ Update with:
 ```bash
 SANITY_TOKEN=$(node -e "console.log(require(process.env.HOME+'/.config/sanity/config.json').authToken)")
 NEW_GH_PAT=ghp_…
-curl -X PATCH "https://r44epy9f.api.sanity.io/v2025-01-01/hooks/projects/r44epy9f/DdtAZLnqwBKXkah8" \
+curl -X PATCH "https://r44epy9f.api.sanity.io/v2025-01-01/hooks/projects/r44epy9f/DPfgDL3jB525Rcxu" \
   -H "Authorization: Bearer $SANITY_TOKEN" \
   -H "Content-Type: application/json" \
   -d "{\"headers\":{\"Authorization\":\"Bearer $NEW_GH_PAT\",\"Accept\":\"application/vnd.github+json\"}}"
