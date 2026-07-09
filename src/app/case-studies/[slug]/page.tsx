@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ScrollReveal from "@/components/ScrollReveal";
-import MarkdownContent from "@/components/MarkdownContent";
-import { getCaseStudyBySlug, getCaseStudySlugs } from "@/lib/content/caseStudies";
+import PortableContent from "@/components/sanity/PortableContent";
+import { getCaseStudyBySlug, getCaseStudySlugs } from "@/lib/sanity/fetch";
+import { urlFor } from "@/lib/sanity/image";
 
 type Props = { params: Promise<{ slug: string }> };
 
 const PLACEHOLDER_SLUG = "coming-soon";
 
 export async function generateStaticParams() {
-  const slugs = getCaseStudySlugs();
+  const slugs = await getCaseStudySlugs();
   if (slugs.length === 0) {
     return [{ slug: PLACEHOLDER_SLUG }];
   }
@@ -19,7 +20,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const cs = getCaseStudyBySlug(slug);
+  const cs = await getCaseStudyBySlug(slug);
   if (!cs) {
     if (slug === PLACEHOLDER_SLUG) return { title: "Case studies coming soon" };
     return { title: "Case study not found" };
@@ -31,14 +32,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: cs.seoTitle || cs.title,
       description: cs.seoDescription || cs.excerpt,
       type: "article",
-      images: cs.image ? [cs.image] : undefined,
+      images: cs.featuredImage?.asset
+        ? [urlFor(cs.featuredImage).width(1200).height(630).fit("crop").url()]
+        : undefined,
     },
   };
 }
 
 export default async function CaseStudyPage({ params }: Props) {
   const { slug } = await params;
-  const cs = getCaseStudyBySlug(slug);
+  const cs = await getCaseStudyBySlug(slug);
 
   if (!cs) {
     if (slug === PLACEHOLDER_SLUG) {
@@ -60,6 +63,15 @@ export default async function CaseStudyPage({ params }: Props) {
     notFound();
   }
 
+  const heroImg = cs.featuredImage?.asset
+    ? urlFor(cs.featuredImage)
+        .width(1600)
+        .height(900)
+        .fit("crop")
+        .auto("format")
+        .url()
+    : null;
+
   const statsCount = cs.stats?.length || 0;
   const statsCols = statsCount > 0 ? Math.min(statsCount, 4) : 3;
 
@@ -74,11 +86,11 @@ export default async function CaseStudyPage({ params }: Props) {
           </p>
         </ScrollReveal>
 
-        {cs.image ? (
+        {heroImg ? (
           <ScrollReveal>
             <div className="article-hero">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={cs.image} alt={cs.imageAlt || cs.title} />
+              <img src={heroImg} alt={cs.featuredImage?.alt || cs.title} />
             </div>
           </ScrollReveal>
         ) : null}
@@ -124,9 +136,9 @@ export default async function CaseStudyPage({ params }: Props) {
           </ScrollReveal>
         ) : null}
 
-        {cs.body ? (
+        {cs.body?.length ? (
           <ScrollReveal>
-            <MarkdownContent>{cs.body}</MarkdownContent>
+            <PortableContent value={cs.body} />
           </ScrollReveal>
         ) : null}
 
