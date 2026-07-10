@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import { VideoSection } from "@/components/sections";
-import { caseStudies as fallbackCaseStudies } from "@/content/siteData";
 import { getAllCaseStudies } from "@/lib/sanity/fetch";
 import { urlFor } from "@/lib/sanity/image";
 
@@ -67,24 +66,20 @@ export default async function CaseStudiesPage() {
               })}
             </div>
           ) : (
-            <div className="vex-grid vex-grid--3">
-              {fallbackCaseStudies.map((cs, i) => (
-                <ScrollReveal key={cs.slug} delay={i * 120}>
-                  <article className="case-card">
-                    <p className="case-card__industry">{cs.industry}</p>
-                    <h2 className="case-card__title">{cs.title}</h2>
-                    <dl>
-                      <dt>Challenge</dt>
-                      <dd>{cs.challenge}</dd>
-                      <dt>Approach</dt>
-                      <dd>{cs.approach}</dd>
-                      <dt>Outcome</dt>
-                      <dd>{cs.outcome}</dd>
-                    </dl>
-                  </article>
-                </ScrollReveal>
-              ))}
-            </div>
+            <ScrollReveal>
+              <div
+                className="editorial-card"
+                style={{ maxWidth: 520, margin: "0 auto", padding: "var(--s-12) var(--s-6)", textAlign: "center" }}
+              >
+                <p className="case-card__industry">Coming soon</p>
+                <h2 className="editorial-card__title" style={{ marginTop: "var(--s-3)" }}>
+                  Client stories are on the way.
+                </h2>
+                <p className="editorial-card__excerpt" style={{ marginTop: "var(--s-3)" }}>
+                  We&apos;re preparing real client case studies. Check back shortly.
+                </p>
+              </div>
+            </ScrollReveal>
           )}
         </div>
       </section>
