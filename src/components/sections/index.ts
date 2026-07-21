@@ -10,3 +10,4 @@ export { default as CaseStudyGrid } from "./CaseStudyGrid";
 export { default as TeamGrid } from "./TeamGrid";
 export { default as CtaBanner } from "./CtaBanner";
 export { default as FaqSection } from "./FaqSection";
+export { default as GalleryCarousel } from "./GalleryCarousel";

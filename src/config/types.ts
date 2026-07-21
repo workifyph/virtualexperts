@@ -138,6 +138,21 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface GalleryImage {
+  /** Path under /public. Leave empty ("") to render a placeholder tile. */
+  src: string;
+  alt?: string;
+  caption?: string;
+}
+
+export interface GalleryAlbum {
+  slug: string;
+  title: string;
+  date?: string;
+  description?: string;
+  images: GalleryImage[];
+}
+
 export interface PillarItem {
   title: string;
   body: string;
