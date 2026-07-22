@@ -53,19 +53,12 @@ export default function Header() {
     >
       <nav className="mx-auto flex max-w-[var(--content-max)] items-center justify-between px-6 py-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 no-underline" onClick={() => setMenuOpen(false)}>
+        <Link href="/" className="flex items-center no-underline" onClick={() => setMenuOpen(false)}>
           <img
-            src={brand.logo}
+            src={opaque ? brand.logo : brand.logoLight}
             alt={brand.name}
-            className="h-9 w-auto"
+            className="h-8 w-auto"
           />
-          <span
-            className={`text-sm font-semibold tracking-wide transition-colors duration-500 ${
-              opaque ? "text-[var(--ink)]" : "text-white"
-            }`}
-          >
-            {brand.shortName}
-          </span>
         </Link>
 
         {/* Desktop nav */}

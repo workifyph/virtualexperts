@@ -13,7 +13,8 @@ export const siteConfig: SiteConfig = {
   brand: {
     name: "Virtual Experts Philippines OPC",
     shortName: "VEX",
-    logo: "/vex_logo.png",
+    logo: "/vex-logo-dark.png",
+    logoLight: "/vex-logo-light.png",
     tagline: "Remote support teams for service-led businesses",
     description:
       "Your trusted global outsourcing partner delivering skilled talent, structured systems, and scalable solutions.",

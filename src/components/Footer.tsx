@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-4">
           {/* Brand */}
           <div className="md:col-span-1">
-            <img src={brand.logo} alt={brand.name} className="mb-4 h-10 w-auto" />
+            <img src={brand.logoLight} alt={brand.name} className="mb-4 h-8 w-auto" />
             <p className="text-sm leading-relaxed text-white/50">
               {brand.description}
             </p>

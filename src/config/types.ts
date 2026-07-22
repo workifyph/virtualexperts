@@ -49,7 +49,10 @@ export interface SocialLink {
 export interface Brand {
   name: string;
   shortName: string;
+  /** Dark-on-light lockup, for light surfaces. */
   logo: string;
+  /** White-on-dark lockup, for dark surfaces (footer, transparent header). */
+  logoLight: string;
   tagline: string;
   description: string;
 }
