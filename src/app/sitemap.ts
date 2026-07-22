@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/how-it-works",
     "/industries",
     "/case-studies",
+    "/talent",
     "/gallery",
     "/faq",
     "/contact",

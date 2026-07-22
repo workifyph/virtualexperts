@@ -157,3 +157,19 @@ export interface PillarItem {
   title: string;
   body: string;
 }
+
+export interface TalentProfile {
+  slug: string;
+  name: string;
+  role: string;
+  available: boolean;
+  /** e.g. "6 years" */
+  experience?: string;
+  location?: string;
+  skills: string[];
+  tools: string[];
+  /** Bio paragraphs from the profile.md body. */
+  bio: string[];
+  /** Path under /public. Empty ("") renders an initials placeholder. */
+  photo: string;
+}
