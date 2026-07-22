@@ -57,7 +57,7 @@ export default function Header() {
           <img
             src={opaque ? brand.logo : brand.logoLight}
             alt={brand.name}
-            className="h-8 w-auto"
+            className="h-6 w-auto"
           />
         </Link>
 
