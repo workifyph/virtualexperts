@@ -95,6 +95,21 @@ export default function TalentPage() {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* VA recruitment */}
+      <section className="vex-section vex-section--sand" style={{ textAlign: "center" }} aria-label="Apply as a VA">
+        <div className="vex-container" style={{ maxWidth: "720px" }}>
+          <ScrollReveal>
+            <p className="vex-eyebrow">For Virtual Assistants</p>
+            <h2 className="vex-heading">Want to see your profile here?</h2>
+            <p className="vex-description" style={{ marginBottom: "var(--s-6)" }}>
+              We&apos;re growing our talent pool. If you&apos;re a skilled VA looking
+              for long-term work with US clients, we&apos;d love to meet you.
+            </p>
+            <Link href="/apply" className="btn btn-secondary">Apply as a VA</Link>
+          </ScrollReveal>
+        </div>
+      </section>
     </>
   );
 }

@@ -32,6 +32,14 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/apply"
+                  className="text-sm text-[var(--gold)] no-underline transition-colors hover:text-white"
+                >
+                  Apply as a VA
+                </Link>
+              </li>
             </ul>
           </div>
 
