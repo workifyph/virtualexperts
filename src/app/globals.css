@@ -7,6 +7,9 @@
    ================================================================== */
 
 :root {
+  /* -- Layout -- */
+  --content-max: 1320px; /* matches .vex-container width */
+
   /* -- Typography Scale (theme-independent) -- */
   --text-hero: clamp(2rem, 4vw, 3.2rem);
   --text-section: clamp(1.5rem, 2.6vw, 2.2rem);
@@ -52,8 +55,12 @@
   --font-serif: var(--display);
 }
 
-/* -- Reset & Base -- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* -- Reset & Base --
+   Layered so Tailwind utilities (@layer utilities) keep priority;
+   un-layered, this reset silently kills every margin/padding utility. */
+@layer base {
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+}
 
 html {
   scroll-behavior: smooth;
