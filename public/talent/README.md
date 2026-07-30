@@ -18,6 +18,19 @@ The folder name becomes the profile's web address:
 `maria-santos` → `virtualexperts.ph/talent/maria-santos`.
 Use only lowercase letters, numbers, and dashes.
 
+**Contents**
+
+1. [Adding a new VA](#1-adding-a-new-va)
+2. [The profile.md format](#2-the-profilemd-format)
+3. [Categories (the buttons at the top of the page)](#3-categories-the-buttons-at-the-top-of-the-page)
+4. [Marking a VA available / not available](#4-marking-a-va-available--not-available)
+5. [What happens when a client clicks "I'm Interested"](#5-what-happens-when-a-client-clicks-im-interested)
+6. [Photo prep](#6-photo-prep)
+7. [Publishing your changes](#7-publishing-your-changes)
+8. [Worked example: adding Rosa from scratch](#8-worked-example-adding-rosa-from-scratch)
+9. [Field reference](#9-field-reference)
+10. [Troubleshooting](#10-troubleshooting)
+
 ---
 
 ## 1. Adding a new VA
@@ -26,10 +39,14 @@ Use only lowercase letters, numbers, and dashes.
 2. Open `profile.md` inside it and fill in the details.
 3. Drop in a portrait photo (any of `.jpg` `.jpeg` `.png` `.webp` `.avif`).
    If the folder has several images, the first one alphabetically is used.
-4. Commit and push (see "Publishing" below).
+4. Commit and push (see [section 7](#7-publishing-your-changes)).
 
 No photo yet? The profile still shows, with the VA's initials as a
 placeholder — you can add the photo later.
+
+Never done this before? Jump to the
+[worked example](#8-worked-example-adding-rosa-from-scratch), which walks
+through one profile end to end using only the GitHub website.
 
 ## 2. The profile.md format
 
@@ -147,4 +164,155 @@ git push origin dev
 on the `dev` branch, navigate to `public/talent/`, and use **Add file →
 Create new file** (type `maria-santos/profile.md` as the name to create the
 folder) or **Upload files** for photos. Committing there triggers the same
-auto-deploy.
+auto-deploy. The next section walks through exactly that.
+
+## 8. Worked example: adding Rosa from scratch
+
+Say you're adding **Rosa Villanueva**, a technical support agent with
+3 years of experience. No terminal needed — this is all on github.com.
+
+**Step 1 — open the folder on the `dev` branch.**
+Go to the repo, click the branch dropdown (it says `main` by default) and
+pick **dev**. Then click into `public` → `talent`.
+
+> Always work on `dev`. It deploys to the staging site where you can
+> check your work before anything reaches real clients.
+
+**Step 2 — create her profile file.**
+Click **Add file → Create new file**. In the filename box type:
+
+```
+rosa-villanueva/profile.md
+```
+
+Typing the `/` is what creates the folder — GitHub turns it into a
+folder as soon as you type the slash. The folder name becomes her web
+address, so keep it lowercase with dashes and no spaces.
+
+**Step 3 — paste her details.** In the big text box:
+
+```
+---
+name: Rosa Villanueva
+role: Technical Support Agent
+category: Technical Support
+specialization: Tier 2 Technical Support
+available: yes
+experience: 3 years
+location: Davao, Philippines
+languages: Filipino, English, Cebuano
+skills: Troubleshooting, Ticket Triage, Remote Support, Documentation
+tools: Jira, Freshdesk, TeamViewer, Confluence
+---
+
+Rosa spent three years on the escalation desk of a US software company,
+handling the tickets that Tier 1 could not close. She is comfortable
+reading logs, reproducing bugs, and writing up clean handoffs for
+engineering.
+
+She has also rewritten a help centre from scratch and mentors new hires
+on tone and escalation etiquette.
+```
+
+Two things to watch: keep both `---` lines exactly as they are, and put
+a blank line between paragraphs of the bio.
+
+**Step 4 — save it.** Scroll down, leave the default commit message or
+type something like `Add Rosa Villanueva`, make sure **Commit directly
+to the dev branch** is selected, and click **Commit new file**.
+
+**Step 5 — add her photo.** You should now be inside the
+`rosa-villanueva` folder. Click **Add file → Upload files**, drag in her
+portrait (named anything — `photo.jpg` is the convention), and commit
+again. See [section 6](#6-photo-prep) for sizing.
+
+**Step 6 — check it.** Wait about two minutes, then open
+<https://dev.virtualexperts.ph/talent>. You should see:
+
+- a new **Technical Support** button at the top, because Rosa is the
+  first person in that category
+- her card under it, with a green pulsing **Available** badge
+- her full profile at `/talent/rosa-villanueva` via **View CV**
+
+**Step 7 — publish to the live site.** On GitHub click **Pull requests →
+New pull request**, set it to merge `dev` into `main`, create it, and
+merge. The live site updates a couple of minutes later.
+
+**Editing her later** is the same but shorter: open her `profile.md`,
+click the pencil icon, change a line, commit to `dev`.
+
+## 9. Field reference
+
+Every line is optional except `name` — but a profile with only a name
+looks bare, so fill in what you can.
+
+| Field            | Example                          | Where it shows                                    | If you leave it out                          |
+| ---------------- | -------------------------------- | ------------------------------------------------- | -------------------------------------------- |
+| `name`           | `Rosa Villanueva`                | Card heading (first name bold) and profile page    | The folder name is used instead               |
+| `role`           | `Technical Support Agent`        | The **Role** row on the card                       | Shows "Virtual Assistant"                     |
+| `category`       | `Technical Support`              | Which button she sits under                        | Guessed from `role`                           |
+| `specialization` | `Tier 2 Technical Support`       | Gold badge under her name                          | Her category name is used                     |
+| `available`      | `yes` / `no`                     | Green "Available" or gray "On Duty" badge          | Treated as `yes`                              |
+| `experience`     | `3 years`                        | The **Experience** row                             | Row is hidden                                 |
+| `location`       | `Davao, Philippines`             | The **Based In** row                               | Row is hidden                                 |
+| `languages`      | `Filipino, English, Cebuano`     | The **Languages** row                              | Row is hidden                                 |
+| `skills`         | `Troubleshooting, Ticket Triage` | **Key Skills** chips (first 6 on the card)         | Row is hidden                                 |
+| `tools`          | `Jira, Freshdesk`                | **Tools** chips (first 6 on the card)              | Row is hidden                                 |
+| *(bio)*          | text after the closing `---`     | The "About" section of her profile page            | Section is hidden                             |
+
+`skills`, `tools` and `languages` are comma-separated — one line each,
+not a bulleted list. The card shows the first six skills and tools; her
+profile page shows all of them, so it's fine to list more.
+
+## 10. Troubleshooting
+
+**My changes aren't showing on the site.**
+The site is rebuilt on each push, so allow ~2 minutes. Then check you
+committed to the right branch: `dev` updates dev.virtualexperts.ph,
+`main` updates the live site. If it's still missing, open the repo's
+**Actions** tab — a red ✗ on the latest run means the build failed.
+
+**The profile shows but the name is wrong** (e.g. "Rosa Villanueva 2").
+The `name:` line is missing or misspelled, so the folder name is being
+used instead. Check the line starts with `name:` and a space.
+
+**A row is missing from the card.**
+That field is missing, empty, or misspelled. `experience:` with nothing
+after it counts as missing. Compare against
+[the field reference](#9-field-reference).
+
+**Everything after the details block turned into one big paragraph.**
+Bio paragraphs need a completely blank line between them. A line break
+alone isn't enough.
+
+**The whole profile looks broken / details are showing as text.**
+One of the two `---` lines was changed or deleted. There must be exactly
+one `---` on the first line and one on its own line after the last
+detail.
+
+**She's in the wrong category.**
+Add or correct the `category:` line — see
+[section 3](#3-categories-the-buttons-at-the-top-of-the-page). Without
+it the category is guessed from her `role:`, which can land her in the
+wrong bucket.
+
+**Her photo isn't showing.**
+Check the file is actually inside her folder (not next to it), and that
+it ends in `.jpg` `.jpeg` `.png` `.webp` or `.avif`. If the folder has
+more than one image, the first one alphabetically wins — delete the
+others or rename the one you want to sort first.
+
+**I need to hide someone temporarily.**
+Rename their folder to start with an underscore (`_rosa-villanueva`).
+It keeps the files but removes them from the site. Rename it back to
+restore. Deleting the folder removes them permanently.
+
+**I broke something and want to undo it.**
+Every change is saved in the repo's history. Open the file on GitHub,
+click **History**, find the version from before your change, and copy
+the old text back in. Nothing is ever really lost.
+
+**Something else is wrong.**
+Send the VA's folder name and what you expected to see to whoever
+maintains the site — the page itself is built from these files, so
+almost every problem is a typo in `profile.md`.
