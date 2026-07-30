@@ -1,6 +1,7 @@
 ---
 name: Ana Reyes
 role: Customer Support Specialist
+category: Customer Support
 available: no
 experience: 5 years
 location: Cebu, Philippines

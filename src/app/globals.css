@@ -1286,3 +1286,285 @@ body {
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+
+/* ====== Talent pool — category menu ====== */
+.talent-cat-grid {
+  display: grid;
+  gap: var(--s-4);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  margin-bottom: var(--s-8);
+}
+
+.talent-cat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: var(--s-6);
+  border-radius: var(--radius-card);
+  background: var(--card-bg);
+  border: var(--card-border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 220ms ease, box-shadow 220ms ease,
+              border-color 220ms ease, background 220ms ease;
+}
+
+/* Accent bar fades in on hover and stays lit while selected. */
+.talent-cat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--accent-bar);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.talent-cat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 24px 56px rgba(18, 17, 15, 0.12);
+}
+
+.talent-cat-card:hover::before,
+.talent-cat-card[aria-pressed="true"]::before {
+  opacity: 1;
+}
+
+.talent-cat-card[aria-pressed="true"] {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, var(--gold-soft), rgba(255, 255, 255, 0.62));
+  box-shadow: 0 18px 44px rgba(141, 104, 35, 0.16);
+}
+
+.talent-cat-card:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 3px;
+}
+
+.talent-cat-card__icon {
+  font-size: 1.7rem;
+  line-height: 1;
+  margin-bottom: 0.15rem;
+}
+
+.talent-cat-card__title {
+  font-family: var(--display);
+  font-size: var(--text-card-title);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.talent-cat-card__tagline {
+  color: var(--muted);
+  font-size: var(--text-small);
+  line-height: 1.55;
+}
+
+.talent-cat-card__count {
+  margin-top: auto;
+  padding-top: var(--s-3);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: var(--text-eyebrow);
+  font-weight: 800;
+  color: var(--gold-deep);
+}
+
+.talent-result-count {
+  margin: 0 0 var(--s-4);
+  color: var(--muted);
+  font-size: var(--text-small);
+}
+
+/* ====== Talent pool — CV cards ====== */
+.cv-grid {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 700px) {
+  .cv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1120px) {
+  .cv-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.cv-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-card);
+  background: var(--card-bg);
+  border: var(--card-border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: rise-in 460ms ease both;
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.cv-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 24px 56px rgba(18, 17, 15, 0.12);
+}
+
+.cv-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-6) var(--s-6) var(--s-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.cv-card__avatar {
+  flex: 0 0 auto;
+  width: 4.75rem;
+  height: 4.75rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(199, 155, 68, 0.35);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(180deg, #302216fa, #181512);
+}
+
+.cv-card__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+}
+
+.cv-card__avatar-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.cv-card__ident { min-width: 0; }
+
+.cv-card__name {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.cv-card__surname {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.cv-card__spec {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: var(--gold-soft);
+  border: 1px solid rgba(199, 155, 68, 0.32);
+  color: var(--gold-deep);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cv-card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-4) var(--s-6) var(--s-6);
+}
+
+.cv-row {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  gap: var(--s-3);
+  align-items: start;
+}
+@media (max-width: 420px) {
+  .cv-row { grid-template-columns: 1fr; gap: 0.25rem; }
+}
+
+.cv-row__label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: var(--text-eyebrow);
+  font-weight: 800;
+  color: var(--gold-deep);
+  padding-top: 0.15rem;
+}
+
+.cv-row__value {
+  color: var(--ink-soft);
+  font-size: var(--text-small);
+  line-height: 1.55;
+}
+
+.cv-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.cv-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  border: 1px solid rgba(199, 155, 68, 0.22);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.cv-chip--tool {
+  background: rgba(23, 21, 18, 0.05);
+  border-color: rgba(120, 113, 104, 0.22);
+}
+
+.cv-card__footer {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-4) var(--s-6);
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.cv-card__cta {
+  min-height: 2.25rem;
+  padding: 0.5rem 1rem;
+  font-size: var(--text-small);
+}
+
+/* Pulsing dot on the "Available" badge. Cut to a static dot by the
+   global prefers-reduced-motion block. */
+.talent-badge--live::before {
+  animation: talent-pulse 2s ease-in-out infinite;
+}
+
+@keyframes talent-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(74, 156, 74, 0.5); }
+  70% { box-shadow: 0 0 0 0.35rem rgba(74, 156, 74, 0); }
+}

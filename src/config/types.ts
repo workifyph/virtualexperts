@@ -161,16 +161,35 @@ export interface PillarItem {
   body: string;
 }
 
+export interface TalentCategory {
+  /** lowercase-with-dashes, used as the filter key */
+  slug: string;
+  title: string;
+  /** Short line under the title on the category button. */
+  tagline: string;
+  /** Emoji, matching the IndustryItem convention. */
+  icon: string;
+  /** Words in a profile's `category:` or `role:` that map here. */
+  keywords: string[];
+}
+
 export interface TalentProfile {
   slug: string;
   name: string;
   role: string;
   available: boolean;
+  /** Category slug — see src/config/talentCategories.ts. */
+  category: string;
+  /** Human label for that category, for the card badge. */
+  categoryTitle: string;
+  /** Optional focus line, e.g. "Tier 2 Technical Support". */
+  specialization?: string;
   /** e.g. "6 years" */
   experience?: string;
   location?: string;
   skills: string[];
   tools: string[];
+  languages: string[];
   /** Bio paragraphs from the profile.md body. */
   bio: string[];
   /** Path under /public. Empty ("") renders an initials placeholder. */

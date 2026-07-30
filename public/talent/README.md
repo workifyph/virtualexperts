@@ -37,9 +37,12 @@ placeholder — you can add the photo later.
 ---
 name: Maria Santos
 role: Executive Virtual Assistant
+category: Virtual Assistants
+specialization: Executive VA
 available: yes
 experience: 6 years
 location: Iloilo, Philippines
+languages: Filipino, English
 skills: Calendar Management, Email Handling, Travel Planning, CRM Updates
 tools: Google Workspace, HubSpot, Slack, Canva
 ---
@@ -49,19 +52,58 @@ paragraphs, separated by a blank line.
 ```
 
 - **name** and **role** — shown on the card and profile page.
-- **available** — `yes` or `no` (see next section).
-- **experience**, **location**, **skills**, **tools** — optional; leave a
-  line out and it simply won't show. `skills` and `tools` are
-  comma-separated lists.
+- **category** — which button on the Talent page they appear under
+  (see section 3).
+- **available** — `yes` or `no` (see section 4).
+- **specialization** — the short gold badge under their name, e.g.
+  `Tier 2 Technical Support`. Leave it out and their category is used.
+- **experience**, **location**, **languages**, **skills**, **tools** —
+  optional; leave a line out and that row simply won't show.
+  `languages`, `skills` and `tools` are comma-separated lists.
+  The card shows the first 6 skills and the first 6 tools; the full
+  list is on their profile page.
 - Keep the two `---` lines exactly as they are.
 
-## 3. Marking a VA available / not available
+## 3. Categories (the buttons at the top of the page)
+
+The Talent page opens with a row of category buttons. Clicking one
+shows only the VAs in that category. The `category:` line in a VA's
+`profile.md` decides which button they sit under.
+
+The categories that already have taglines and icons are:
+
+| Type this in `category:` | Button that appears     |
+| ------------------------ | ----------------------- |
+| `Customer Support`       | Customer Support Agents |
+| `Virtual Assistants`     | Virtual Assistants      |
+| `Technical Support`      | Technical Support       |
+| `Bookkeeping & Admin`    | Bookkeeping & Admin     |
+| `Creative & Marketing`   | Creative & Marketing    |
+
+Things worth knowing:
+
+- **Spelling is forgiving.** `Customer Support`, `customer service`
+  and `Customer Support Agents` all land on the same button.
+- **A button only appears if someone is in it.** Add the first
+  technical support VA and the Technical Support button shows up on
+  its own. Move the last one out and it disappears. No code change.
+- **You can invent a category.** Type something not in the table —
+  `category: Sales Development` — and it gets its own button using
+  exactly that wording. It won't have a tagline or a custom icon
+  until a developer adds one, but it works straight away.
+- **Forgot the line?** The category is guessed from their `role:`
+  instead, so nobody ever falls off the page.
+
+A developer edits `src/config/talentCategories.ts` to add a tagline,
+an icon, or to change the left-to-right order of the buttons.
+
+## 4. Marking a VA available / not available
 
 Edit one line in their `profile.md`:
 
 ```
-available: yes   ← green "Available" badge + hire form on their page
-available: no    ← gray "Currently Placed" badge, hire form replaced
+available: yes   ← green pulsing "Available" badge + hire form on their page
+available: no    ← gray "On Duty" badge, hire form replaced
                    with a "contact us" prompt
 ```
 
@@ -69,21 +111,22 @@ Profiles with `available: yes` are listed first. To remove a VA from the
 site entirely, delete their folder (or rename it to start with `_`, e.g.
 `_maria-santos`, to keep it on file but hidden).
 
-## 4. What happens when a client clicks "I'm Interested"
+## 5. What happens when a client clicks "I'm Interested"
 
 The client fills in their name, email, company, and an optional message on
 the VA's profile page. That sends an email to **contact@virtualexperts.ph**
 containing the client's details plus the VA's name, role, and profile
 link. Replying to that email goes straight to the client.
 
-## 5. Photo prep
+## 6. Photo prep
 
-- Portrait orientation looks best (the frame is roughly 4:5, cropped from
-  the top).
+- Portrait orientation looks best. The Talent page crops it to a small
+  circle centred near the top, and the profile page uses a taller 4:5
+  frame — so keep the face in the upper-middle of the shot.
 - Resize to **~800px wide**, aim for **under ~300KB**.
 - Prefer `.jpg` or `.webp`.
 
-## 6. Publishing your changes
+## 7. Publishing your changes
 
 ```bash
 git checkout dev

@@ -1,6 +1,7 @@
 ---
 name: Maria Santos
 role: Executive Virtual Assistant
+category: Virtual Assistants
 available: yes
 experience: 6 years
 location: Iloilo, Philippines

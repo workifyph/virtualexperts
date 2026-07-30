@@ -1,6 +1,7 @@
 ---
 name: Juan Dela Cruz
 role: Bookkeeping & Admin VA
+category: Bookkeeping & Admin
 available: yes
 experience: 4 years
 location: San Jose, Antique, Philippines

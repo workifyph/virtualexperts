@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
-import { getTalentProfiles } from "@/lib/talent";
-import { initials } from "./initials";
+import { getTalentCategories, getTalentProfiles } from "@/lib/talent";
+import TalentBrowser from "./TalentBrowser";
 
 export const metadata: Metadata = {
   title: "Hire a VA",
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 
 export default function TalentPage() {
   const profiles = getTalentProfiles();
+  const categories = getTalentCategories(profiles);
 
   return (
     <>
@@ -31,47 +32,13 @@ export default function TalentPage() {
         </div>
       </section>
 
-      {/* Profiles */}
-      <section className="vex-section" aria-label="Available virtual assistants">
+      {/* Talent pool — category menu + CV cards */}
+      <section className="vex-section" aria-label="Talent pool">
         <div className="vex-container">
           {profiles.length > 0 ? (
-            <div className="vex-grid vex-grid--3">
-              {profiles.map((profile, i) => (
-                <ScrollReveal key={profile.slug} delay={i * 100}>
-                  <div className="founder-card" style={{ height: "100%" }}>
-                    <div className="founder-card__portrait">
-                      {profile.photo ? (
-                        <img src={profile.photo} alt={profile.name} />
-                      ) : (
-                        <div className="talent-portrait-fallback" aria-hidden>
-                          {initials(profile.name)}
-                        </div>
-                      )}
-                    </div>
-                    <span
-                      className={`talent-badge ${profile.available ? "" : "talent-badge--unavailable"}`}
-                      style={{ marginBottom: "var(--s-2)" }}
-                    >
-                      {profile.available ? "Available" : "Currently Placed"}
-                    </span>
-                    <h3 className="founder-card__name">{profile.name}</h3>
-                    <p className="founder-card__role">{profile.role}</p>
-                    {profile.skills.length > 0 && (
-                      <div className="talent-pills" style={{ marginBottom: "var(--s-3)" }}>
-                        {profile.skills.slice(0, 4).map((skill) => (
-                          <span key={skill} className="industry-pill" style={{ padding: "0.35rem 0.7rem" }}>
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    <Link href={`/talent/${profile.slug}`} className="btn btn-secondary w-full">
-                      View Profile
-                    </Link>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
+            <ScrollReveal>
+              <TalentBrowser profiles={profiles} categories={categories} />
+            </ScrollReveal>
           ) : (
             <p className="vex-description" style={{ textAlign: "center" }}>
               New talent profiles are being prepared — check back soon, or{" "}

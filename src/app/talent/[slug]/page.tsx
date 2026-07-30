@@ -77,7 +77,7 @@ export default async function TalentProfilePage({ params }: Props) {
                 className={`talent-badge ${profile.available ? "" : "talent-badge--unavailable"}`}
                 style={{ marginBottom: "var(--s-2)" }}
               >
-                {profile.available ? "Available" : "Currently Placed"}
+                {profile.available ? "Available" : "On Duty"}
               </span>
               <h1 className="founder-card__name" style={{ fontSize: "1.5rem" }}>
                 {profile.name}
@@ -85,6 +85,16 @@ export default async function TalentProfilePage({ params }: Props) {
               <p className="founder-card__role">{profile.role}</p>
 
               <dl className="talent-facts">
+                <div>
+                  <dt>Specialization</dt>
+                  <dd>{profile.specialization ?? profile.categoryTitle}</dd>
+                </div>
+                {profile.languages.length > 0 && (
+                  <div>
+                    <dt>Languages</dt>
+                    <dd>{profile.languages.join(" · ")}</dd>
+                  </div>
+                )}
                 {profile.experience && (
                   <div>
                     <dt>Experience</dt>
