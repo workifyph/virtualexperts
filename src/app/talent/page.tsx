@@ -5,7 +5,7 @@ import { getTalentCategories, getTalentProfiles } from "@/lib/talent";
 import TalentBrowser from "./TalentBrowser";
 
 export const metadata: Metadata = {
-  title: "Hire a VA",
+  title: "Talent Pool",
   description:
     "Meet the virtual assistants of Virtual Experts Philippines who are ready to join your team today.",
 };
@@ -20,7 +20,7 @@ export default function TalentPage() {
       <section className="hero-premium vex-section" aria-label="Talent hero">
         <div className="vex-container" style={{ textAlign: "center" }}>
           <ScrollReveal>
-            <p className="vex-eyebrow">Hire a VA</p>
+            <p className="vex-eyebrow">Talent Pool</p>
             <h1 className="vex-heading" style={{ fontSize: "var(--text-hero)" }}>
               Meet the experts ready to join your team.
             </h1>

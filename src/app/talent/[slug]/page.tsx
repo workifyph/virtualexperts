@@ -38,7 +38,7 @@ export default async function TalentProfilePage({ params }: Props) {
       return (
         <section className="vex-section vex-section--editorial" aria-label="Coming soon">
           <div className="vex-container vex-article" style={{ textAlign: "center" }}>
-            <p className="vex-eyebrow">Hire a VA</p>
+            <p className="vex-eyebrow">Talent Pool</p>
             <h1 className="vex-heading">Coming soon</h1>
             <p className="vex-description">
               We&apos;re preparing our first talent profiles. Check back shortly.
@@ -57,7 +57,7 @@ export default async function TalentProfilePage({ params }: Props) {
     <section className="vex-section vex-section--editorial" aria-label={profile.name}>
       <div className="vex-container" style={{ maxWidth: "960px" }}>
         <ScrollReveal>
-          <p className="vex-eyebrow">Hire a VA</p>
+          <p className="vex-eyebrow">Talent Pool</p>
         </ScrollReveal>
 
         <div className="vex-grid vex-grid--2" style={{ alignItems: "start" }}>

@@ -1,6 +1,6 @@
 # Talent — how to manage VA profiles
 
-The Hire-a-VA page (https://virtualexperts.ph/talent) builds itself from the
+The Talent Pool page (https://virtualexperts.ph/talent) builds itself from the
 folders in this directory (`public/talent/`). **No code changes are ever
 needed** — you edit a text file and a photo, then push.
 
