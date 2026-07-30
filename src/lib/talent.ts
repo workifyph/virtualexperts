@@ -1,4 +1,3 @@
-import fs from "fs";
 import path from "path";
 import type { TalentCategory, TalentProfile } from "@/config/types";
 import {
@@ -6,6 +5,15 @@ import {
   orderTalentCategories,
   resolveCategory,
 } from "@/config/talentCategories";
+import {
+  findPhoto,
+  parseParagraphs,
+  parseProfileFile,
+  readPersonFolders,
+  readProfileFile,
+  splitList,
+  titleCase,
+} from "./profileFile";
 
 /* ==================================================================
    Talent loader (build time)
@@ -28,74 +36,12 @@ import {
    ================================================================== */
 
 const TALENT_DIR = path.join(process.cwd(), "public", "talent");
-const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
-
-function titleCase(slug: string): string {
-  return slug
-    .split(/[-_]+/)
-    .filter(Boolean)
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
-}
-
-function splitList(value: string | undefined): string[] {
-  if (!value) return [];
-  return value
-    .split(",")
-    .map((item) => item.trim())
-    .filter(Boolean);
-}
-
-/** Parse a `--- key: value ---` header + body from profile.md. */
-function parseProfileFile(raw: string): { fields: Record<string, string>; body: string } {
-  const fields: Record<string, string> = {};
-  const normalized = raw.replace(/\r\n/g, "\n").trim();
-
-  const match = normalized.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
-  const header = match ? match[1] : "";
-  const body = match ? match[2] : normalized;
-
-  for (const line of header.split("\n")) {
-    const kv = line.match(/^([A-Za-z][\w-]*)\s*:\s*(.*)$/);
-    if (kv) fields[kv[1].toLowerCase()] = kv[2].trim();
-  }
-
-  return { fields, body: body.trim() };
-}
 
 export function getTalentProfiles(): TalentProfile[] {
-  let folders: fs.Dirent[];
-  try {
-    folders = fs
-      .readdirSync(TALENT_DIR, { withFileTypes: true })
-      .filter(
-        (entry) =>
-          entry.isDirectory() &&
-          !entry.name.startsWith(".") &&
-          !entry.name.startsWith("_"),
-      );
-  } catch {
-    return [];
-  }
-
-  return folders
-    .map((folder) => folder.name)
+  return readPersonFolders(TALENT_DIR)
     .map((folder) => {
       const dir = path.join(TALENT_DIR, folder);
-
-      let raw = "";
-      try {
-        raw = fs.readFileSync(path.join(dir, "profile.md"), "utf8");
-      } catch {
-        // No profile.md yet — still show the folder with defaults so
-        // a half-finished profile is visible on the dev site.
-      }
-      const { fields, body } = parseProfileFile(raw);
-
-      const photoFile = fs
-        .readdirSync(dir)
-        .filter((file) => IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase()))
-        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))[0];
+      const { fields, body } = parseProfileFile(readProfileFile(dir));
 
       const availableRaw = (fields["available"] ?? "yes").toLowerCase();
       const role = fields["role"] || "Virtual Assistant";
@@ -114,8 +60,8 @@ export function getTalentProfiles(): TalentProfile[] {
         skills: splitList(fields["skills"]),
         tools: splitList(fields["tools"]),
         languages: splitList(fields["languages"]),
-        bio: body ? body.split(/\n\s*\n/).map((p) => p.replace(/\n/g, " ").trim()) : [],
-        photo: photoFile ? `/talent/${folder}/${photoFile}` : "",
+        bio: parseParagraphs(body),
+        photo: findPhoto(dir, `/talent/${folder}`),
       };
     })
     // Available VAs first, then A→Z by name within each group.

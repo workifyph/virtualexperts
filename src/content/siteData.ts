@@ -4,7 +4,6 @@ import type {
   TestimonialItem,
   StepItem,
   CaseStudyItem,
-  TeamMember,
   IndustryItem,
   PillarItem,
   FaqItem,
@@ -60,21 +59,6 @@ export const services: ServiceItem[] = [
     title: "Recruitment Support",
     description: "End-to-end sourcing, screening, and candidate matching.",
     image: "/service-recruitment.png",
-  },
-];
-
-export const teamMembers: TeamMember[] = [
-  {
-    name: "Dulce Chiongson",
-    role: "CEO & Co-Founder",
-    image: "/dulce-chiongson.jpg",
-    bio: "Co-founded VEX in 2017 and leads the company with a long-term focus on service quality, professionalism, and dependable execution.",
-  },
-  {
-    name: "Chep Elvas",
-    role: "Co-Founder",
-    image: "/chep-elvas.png",
-    bio: "Brings customer relations, marketing, and business planning experience that helps clients scale through stronger support systems.",
   },
 ];
 

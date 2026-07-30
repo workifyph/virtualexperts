@@ -3,7 +3,9 @@ import ScrollReveal from "@/components/ScrollReveal";
 import Link from "next/link";
 import { VideoSection } from "@/components/sections";
 import { siteConfig } from "@/config";
-import { teamMembers, corePrinciples, whyFilipino } from "@/content/siteData";
+import { corePrinciples, whyFilipino } from "@/content/siteData";
+import { getLeadership } from "@/lib/leadership";
+import { initials } from "@/app/talent/initials";
 
 export const metadata: Metadata = {
   title: "About",
@@ -13,6 +15,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   const { brand } = siteConfig;
+  const leadership = getLeadership();
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -77,11 +80,17 @@ export default function AboutPage() {
           </ScrollReveal>
 
           <div className="vex-grid vex-grid--2" style={{ marginTop: "var(--s-8)" }}>
-            {teamMembers.map((f, i) => (
-              <ScrollReveal key={f.name} delay={i * 150}>
+            {leadership.map((f, i) => (
+              <ScrollReveal key={f.slug} delay={i * 150}>
                 <div className="founder-card">
                   <div className="founder-card__portrait">
-                    <img src={f.image} alt={f.name} loading="lazy" />
+                    {f.image ? (
+                      <img src={f.image} alt={f.name} loading="lazy" />
+                    ) : (
+                      <div className="talent-portrait-fallback" aria-hidden>
+                        {initials(f.name)}
+                      </div>
+                    )}
                   </div>
                   <h3 className="founder-card__name">{f.name}</h3>
                   <p className="founder-card__role">{f.role}</p>

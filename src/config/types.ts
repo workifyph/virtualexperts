@@ -125,10 +125,15 @@ export interface CaseStudyItem {
 }
 
 export interface TeamMember {
+  /** Folder name under public/leadership/. */
+  slug: string;
   name: string;
   role: string;
+  /** Path under /public. Empty ("") when no photo has been added yet. */
   image: string;
   bio: string;
+  /** Display order — lower first; unnumbered people sort last. */
+  order: number;
 }
 
 export interface IndustryItem {
