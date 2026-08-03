@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import { VideoSection } from "@/components/sections";
-import { getAllCaseStudies } from "@/lib/sanity/fetch";
-import { urlFor } from "@/lib/sanity/image";
+import { getCaseStudies } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Case Studies",
@@ -11,9 +10,8 @@ export const metadata: Metadata = {
     "See how our remote teams have helped businesses improve operations and reduce missed opportunities.",
 };
 
-export default async function CaseStudiesPage() {
-  const sanityCases = await getAllCaseStudies();
-  const useSanity = sanityCases.length > 0;
+export default function CaseStudiesPage() {
+  const cases = getCaseStudies();
 
   return (
     <>
@@ -31,24 +29,21 @@ export default async function CaseStudiesPage() {
       {/* Cases */}
       <section className="vex-section" aria-label="Case study details">
         <div className="vex-container">
-          {useSanity ? (
-            <div className={`editorial-grid${sanityCases.length === 1 ? " editorial-grid--single" : ""}`}>
-              {sanityCases.map((cs, i) => {
-                const img = cs.featuredImage?.asset
-                  ? urlFor(cs.featuredImage).width(960).height(600).fit("crop").auto("format").url()
-                  : null;
+          {cases.length > 0 ? (
+            <div className={`editorial-grid${cases.length === 1 ? " editorial-grid--single" : ""}`}>
+              {cases.map((cs, i) => {
                 const initial = cs.title.charAt(0).toUpperCase();
                 return (
-                  <ScrollReveal key={cs._id} delay={i * 120}>
+                  <ScrollReveal key={cs.slug} delay={i * 120}>
                     <Link
                       href={`/case-studies/${cs.slug}`}
                       className="editorial-card"
                       aria-label={cs.title}
                     >
                       <div className="editorial-card__media">
-                        {img ? (
+                        {cs.cover ? (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={img} alt={cs.featuredImage?.alt || cs.title} loading="lazy" />
+                          <img src={cs.cover} alt={cs.coverAlt} loading="lazy" />
                         ) : (
                           <div className="editorial-card__media editorial-card__media--placeholder">
                             {initial}
@@ -56,7 +51,7 @@ export default async function CaseStudiesPage() {
                         )}
                       </div>
                       <div className="editorial-card__body">
-                        <p className="case-card__industry">{cs.clientIndustry}</p>
+                        <p className="case-card__industry">{cs.industry}</p>
                         <h2 className="editorial-card__title">{cs.title}</h2>
                         <p className="editorial-card__excerpt">{cs.excerpt}</p>
                       </div>

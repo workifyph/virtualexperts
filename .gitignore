@@ -42,3 +42,7 @@ next-env.d.ts
 
 # sanity
 .sanity/
+
+# Generated from content/ by scripts/sync-content-images.mjs
+/public/blog/
+/public/case-studies/

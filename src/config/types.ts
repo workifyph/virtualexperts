@@ -166,6 +166,52 @@ export interface PillarItem {
   body: string;
 }
 
+// ── Blog & case studies (content/ folders) ──
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  /** ISO date, "YYYY-MM-DD". */
+  date: string;
+  author?: string;
+  category?: string;
+  tags: string[];
+  /** Path under /public. Empty ("") renders an initial-letter placeholder. */
+  cover: string;
+  coverAlt: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  /** Article body, already rendered from Markdown. */
+  bodyHtml: string;
+}
+
+export interface CaseStudyStat {
+  value: string;
+  label: string;
+}
+
+export interface CaseStudy {
+  slug: string;
+  title: string;
+  industry: string;
+  excerpt: string;
+  date: string;
+  challenge: string;
+  solution: string;
+  results: string;
+  stats: CaseStudyStat[];
+  quote?: string;
+  quoteAuthor?: string;
+  quoteRole?: string;
+  cover: string;
+  coverAlt: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  /** Long-form story below the summary, rendered from Markdown. */
+  bodyHtml: string;
+}
+
 export interface TalentCategory {
   /** lowercase-with-dashes, used as the filter key */
   slug: string;

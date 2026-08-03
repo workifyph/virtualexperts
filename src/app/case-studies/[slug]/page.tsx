@@ -2,25 +2,23 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ScrollReveal from "@/components/ScrollReveal";
-import PortableContent from "@/components/sanity/PortableContent";
-import { getCaseStudyBySlug, getCaseStudySlugs } from "@/lib/sanity/fetch";
-import { urlFor } from "@/lib/sanity/image";
+import { getCaseStudies, getCaseStudy } from "@/lib/content";
 
 type Props = { params: Promise<{ slug: string }> };
 
 const PLACEHOLDER_SLUG = "coming-soon";
 
-export async function generateStaticParams() {
-  const slugs = await getCaseStudySlugs();
-  if (slugs.length === 0) {
+export function generateStaticParams() {
+  const cases = getCaseStudies();
+  if (cases.length === 0) {
     return [{ slug: PLACEHOLDER_SLUG }];
   }
-  return slugs.map((slug) => ({ slug }));
+  return cases.map((cs) => ({ slug: cs.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const cs = await getCaseStudyBySlug(slug);
+  const cs = getCaseStudy(slug);
   if (!cs) {
     if (slug === PLACEHOLDER_SLUG) return { title: "Case studies coming soon" };
     return { title: "Case study not found" };
@@ -32,16 +30,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: cs.seoTitle || cs.title,
       description: cs.seoDescription || cs.excerpt,
       type: "article",
-      images: cs.featuredImage?.asset
-        ? [urlFor(cs.featuredImage).width(1200).height(630).fit("crop").url()]
-        : undefined,
+      images: cs.cover ? [cs.cover] : undefined,
     },
   };
 }
 
 export default async function CaseStudyPage({ params }: Props) {
   const { slug } = await params;
-  const cs = await getCaseStudyBySlug(slug);
+  const cs = getCaseStudy(slug);
 
   if (!cs) {
     if (slug === PLACEHOLDER_SLUG) {
@@ -63,15 +59,6 @@ export default async function CaseStudyPage({ params }: Props) {
     notFound();
   }
 
-  const heroImg = cs.featuredImage?.asset
-    ? urlFor(cs.featuredImage)
-        .width(1600)
-        .height(900)
-        .fit("crop")
-        .auto("format")
-        .url()
-    : null;
-
   const statsCount = cs.stats?.length || 0;
   const statsCols = statsCount > 0 ? Math.min(statsCount, 4) : 3;
 
@@ -79,18 +66,18 @@ export default async function CaseStudyPage({ params }: Props) {
     <article className="vex-section vex-section--editorial" aria-label={cs.title}>
       <div className="vex-container vex-article">
         <ScrollReveal>
-          <p className="vex-eyebrow">{cs.clientIndustry}</p>
+          <p className="vex-eyebrow">{cs.industry}</p>
           <h1 className="vex-heading">{cs.title}</h1>
           <p className="vex-description" style={{ marginTop: "var(--s-4)" }}>
             {cs.excerpt}
           </p>
         </ScrollReveal>
 
-        {heroImg ? (
+        {cs.cover ? (
           <ScrollReveal>
             <div className="article-hero">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={heroImg} alt={cs.featuredImage?.alt || cs.title} />
+              <img src={cs.cover} alt={cs.coverAlt} />
             </div>
           </ScrollReveal>
         ) : null}
@@ -98,11 +85,11 @@ export default async function CaseStudyPage({ params }: Props) {
         <ScrollReveal>
           <dl className="case-summary">
             <dt>Challenge</dt>
-            <dd>{cs.challenge}</dd>
+            <dd dangerouslySetInnerHTML={{ __html: cs.challenge }} />
             <dt>Solution</dt>
-            <dd>{cs.solution}</dd>
+            <dd dangerouslySetInnerHTML={{ __html: cs.solution }} />
             <dt>Results</dt>
-            <dd>{cs.results}</dd>
+            <dd dangerouslySetInnerHTML={{ __html: cs.results }} />
           </dl>
         </ScrollReveal>
 
@@ -122,23 +109,26 @@ export default async function CaseStudyPage({ params }: Props) {
           </ScrollReveal>
         ) : null}
 
-        {cs.testimonial?.quote ? (
+        {cs.quote ? (
           <ScrollReveal>
             <blockquote className="pull-quote">
-              <p className="pull-quote__text">“{cs.testimonial.quote}”</p>
-              {cs.testimonial.author ? (
+              <p className="pull-quote__text">“{cs.quote}”</p>
+              {cs.quoteAuthor ? (
                 <p className="pull-quote__attr">
-                  — <strong>{cs.testimonial.author}</strong>
-                  {cs.testimonial.role ? `, ${cs.testimonial.role}` : ""}
+                  — <strong>{cs.quoteAuthor}</strong>
+                  {cs.quoteRole ? `, ${cs.quoteRole}` : ""}
                 </p>
               ) : null}
             </blockquote>
           </ScrollReveal>
         ) : null}
 
-        {cs.body?.length ? (
+        {cs.bodyHtml ? (
           <ScrollReveal>
-            <PortableContent value={cs.body} />
+            <div
+              className="prose-vex"
+              dangerouslySetInnerHTML={{ __html: cs.bodyHtml }}
+            />
           </ScrollReveal>
         ) : null}
 
