@@ -1,5 +1,5 @@
 ---
-name: Maria Santos
+name: Maria
 role: Executive Virtual Assistant
 category: Virtual Assistants
 available: yes
