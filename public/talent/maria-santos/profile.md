@@ -4,7 +4,7 @@ role: Executive Virtual Assistant
 category: Virtual Assistants
 available: yes
 experience: 6 years
-location: Iloilo, Philippines
+location: Antique, Philippines 5700
 skills: Calendar Management, Email Handling, Travel Planning, CRM Updates
 tools: Google Workspace, HubSpot, Slack, Canva, Photoshop
 ---
