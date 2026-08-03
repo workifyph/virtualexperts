@@ -1,12 +1,12 @@
 ---
-name: Maria Santos
+name: Maria
 role: Executive Virtual Assistant
 category: Virtual Assistants
 available: yes
 experience: 6 years
 location: Iloilo, Philippines
 skills: Calendar Management, Email Handling, Travel Planning, CRM Updates
-tools: Google Workspace, HubSpot, Slack, Canva
+tools: Google Workspace, HubSpot, Slack, Canva, Photoshop
 ---
 
 Maria has supported C-level executives in US real estate and healthcare
