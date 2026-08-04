@@ -1,6 +1,6 @@
 # Cloudflare Pages header overrides.
-# Goal: HTML pages must revalidate every request so Sanity publishes
-# appear immediately after a redeploy. Static asset bundles keep a
+# Goal: HTML pages must revalidate every request so new content
+# appears immediately after a redeploy. Static asset bundles keep a
 # long-lived immutable cache because Next.js hashes their filenames.
 
 /*

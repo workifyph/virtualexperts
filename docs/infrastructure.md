@@ -8,7 +8,6 @@ account, project ID, domain, or environment changes.
 | Service        | Account / Owner                | Notes                                                            |
 | -------------- | ------------------------------ | ---------------------------------------------------------------- |
 | GitHub repo    | `workifyph/virtualexperts`     | Default branch: `main`                                           |
-| Sanity         | `Workify.ph.hq@gmail.com` org  | Project: **Virtual Experts** (`r44epy9f`), dataset: `production` |
 | Cloudflare     | `Workify.ph.hq@gmail.com`      | **Not** under `aisaiah.platform@gmail.com` — that's a different account |
 | Domain (DNS)   | Cloudflare (same account)      | `virtualexperts.ph`                                              |
 
@@ -56,30 +55,29 @@ rm -rf node_modules/.cache/wrangler
 ## Environments
 
 The site has **two environments**, served from two different Cloudflare Pages
-projects. Sanity content reaches **dev only**; prod is gated behind an
+projects. Content changes reach **dev only**; prod is gated behind an
 approved branch merge.
 
-| Environment | Branch | Cloudflare Pages project   | Domain                     | Sanity dataset |
-| ----------- | ------ | -------------------------- | -------------------------- | -------------- |
-| Development | `dev`  | `virtualexperts-preview`   | `dev.virtualexperts.ph`    | `production`   |
-| Production  | `main` | `virtualexperts`           | `virtualexperts.ph`, `www.virtualexperts.ph` | `production`   |
+| Environment | Branch | Cloudflare Pages project   | Domain                     |
+| ----------- | ------ | -------------------------- | -------------------------- |
+| Development | `dev`  | `virtualexperts-preview`   | `dev.virtualexperts.ph`    |
+| Production  | `main` | `virtualexperts`           | `virtualexperts.ph`, `www.virtualexperts.ph` |
 
 > The dev project is named `virtualexperts-preview` for historical reasons —
 > Cloudflare Pages does not support renaming projects. Its production-branch
 > field is set to `dev`, so the custom-domain alias `dev.virtualexperts.ph`
 > serves dev-branch deploys.
 
-> Both environments currently read the **same** Sanity dataset (Option A in
-> the rollback notes below). Editors stage with **drafts** in Sanity; only
-> *published* docs reach either environment. To get content from dev to prod,
-> someone with approval rights merges `dev → main`.
+> Content lives in the repo, so an environment shows exactly what its branch
+> contains — `dev` shows the `dev` branch, prod shows `main`. Editors stage by
+> keeping a folder's name prefixed with `_` (a draft). To get content from dev
+> to prod, someone with approval rights merges `dev → main`.
 
 ## Deploy triggers
 
 | Trigger                              | Workflow                          | Result                          |
 | ------------------------------------ | --------------------------------- | ------------------------------- |
 | `git push` to `dev`                  | `.github/workflows/deploy-dev.yml`  | Build + deploy to `virtualexperts-dev` |
-| Sanity webhook (`sanity-publish`)    | `.github/workflows/deploy-dev.yml`  | Same — picks up new content     |
 | PR merged: `dev → main`              | `.github/workflows/deploy-prod.yml` | Approval-gated; deploys to `virtualexperts` |
 
 The **production** workflow uses a GitHub **Environment** named `production`
@@ -88,26 +86,28 @@ deploy step waits until a reviewer approves it.
 
 ## What the VA / content editor sees
 
-VAs and content editors **never touch Cloudflare, GitHub, or any deploy
-machinery.** Their entire workflow is browser → Sanity Studio. The publish →
-deploy chain runs server-side in GitHub Actions and reaches Cloudflare via
-secrets the VA cannot see.
+VAs and content editors **never touch Cloudflare or any deploy machinery.**
+All content is folders of text files and images in this repo, edited through
+the GitHub website. The deploy chain runs server-side in GitHub Actions and
+reaches Cloudflare via secrets the VA cannot see.
 
 ```
-VA browser → /studio
-   → log in to SANITY (invite-only)
-   → edit blog post or case study
-   → click Publish
-   → (server-side) Sanity webhook → GitHub Actions → wrangler pages deploy
+VA browser → github.com/workifyph/virtualexperts (branch: dev)
+   → edit a folder under content/blog, content/case-studies,
+     public/talent, or public/leadership
+   → Commit to dev
+   → (server-side) GitHub Actions → wrangler pages deploy
    → dev.virtualexperts.ph updates
    → VA refreshes the tab to see their content
+   → to go live: open a PR dev → main and merge (approval-gated)
 ```
 
-**What the VA needs:** a browser, a Sanity account invite, and the URL of the
-embedded Studio.
+**What the VA needs:** a browser and write access to the GitHub repo.
 
-**What the VA never needs:** Cloudflare login, GitHub access, wrangler, Node,
-SSH, VPN, terminal access, or any infrastructure credentials.
+**What the VA never needs:** Cloudflare login, wrangler, Node, SSH, VPN,
+terminal access, or any infrastructure credentials.
+
+The step-by-step procedure is in [`editing-content.md`](./editing-content.md).
 
 ### Keep the dev site publicly viewable
 
@@ -126,84 +126,61 @@ prefer a basic-auth header in `_headers` or a Cloudflare Worker, not Access.
 That way you can hand the password to VAs without giving them Cloudflare
 accounts.
 
-## Rollback runbook (Option A — single dataset)
+## Rollback runbook
 
-We use one Sanity dataset (`production`) for both site environments. Rollback
-is **per-document**, not snapshot-based. Read this carefully — it changes how
-you respond to a bad change in prod.
+Content lives in git alongside the code, so **rollback is a git operation** —
+there is no separate CMS state that can drift out of sync with a deploy.
 
-### What Sanity gives you
+### What git gives you
 
-1. **Drafts vs published.** All edits start as drafts. The site uses
-   `perspective: "published"`, so drafts never appear on dev or prod.
-   *Editors should stage as drafts and only publish when ready.*
-2. **Document history.** Every published version of every document is kept
-   (~30 days on free plan, longer on paid). Studio → ⋯ menu → "History" →
-   "Restore" reverts a single doc to a prior version.
-3. **No automatic atomic snapshots** on the free plan. Sanity Releases
-   (paid) groups changes for atomic publish/rollback; we do not have it.
+1. **Drafts.** A folder prefixed with `_` is invisible on both environments.
+   Editors stage work by leaving the underscore on until it is ready.
+2. **Full history.** Every version of every article, profile, and photo is in
+   the repo forever. On GitHub: open the file → **History** → pick a version.
+3. **Atomic rollback.** Reverting a commit reverts the text *and* its images
+   together. A deploy is reproducible from its commit — rebuilding the same
+   commit always produces the same site.
 
 ### What Cloudflare gives you
 
-- Every Pages deploy is preserved. From the Pages dashboard you can
-  **promote a previous deployment** as the live one — but this is a
-  **temporary fix only**. The next prod deploy will rebuild from current
-  Sanity state and the bad change comes back unless you also revert in
-  Sanity.
+Every Pages deploy is preserved, so you can **promote a previous deployment**
+from the Pages dashboard for an instant fix. Unlike the old CMS setup this is
+now safe to leave in place: the next deploy rebuilds from the repo, so as long
+as you also revert the commit, the two agree.
 
 ### Rollback playbooks
 
 **Bad change caught on dev (preferred case):**
 
-1. Editor publishes a bad doc → Sanity webhook → `dev` rebuilds → bad
-   content visible on `dev.virtualexperts.ph`.
+1. Bad content is pushed to `dev` → `dev` rebuilds → visible on
+   `dev.virtualexperts.ph`.
 2. **Do not merge `dev → main`.**
-3. Editor reverts the doc via Studio → History → Restore.
-4. Webhook fires again → `dev` rebuilds → verify.
+3. Fix it forward with another commit to `dev`, or revert the bad commit:
+   `git revert <sha> && git push origin dev`.
+4. `dev` rebuilds → verify.
 5. Once green, approve the `dev → main` merge.
 
 **Bad change reached prod:**
 
-1. **Immediate stopgap:** in Cloudflare dashboard → Pages → `virtualexperts`
-   → Deployments → click the previous green deployment → "Rollback to this
-   deployment". Site is reverted within seconds.
-2. **Permanent fix:** revert the affected doc(s) in Sanity Studio → History
-   → Restore.
-3. Webhook fires → `dev` rebuilds → verify on `dev.virtualexperts.ph`.
-4. Approve `dev → main` merge → prod rebuilds with restored content.
-5. The Cloudflare-level rollback is now redundant — the latest prod
-   deployment matches the restored state.
+1. **Immediate stopgap:** Cloudflare dashboard → Pages → `virtualexperts` →
+   Deployments → previous green deployment → "Rollback to this deployment".
+   Live within seconds.
+2. **Permanent fix:** revert the commit on `dev`
+   (`git revert <sha> && git push origin dev`), verify on dev, then merge
+   `dev → main`.
+3. Prod rebuilds from the reverted commit and now matches the stopgap.
 
-**Editor wants to test changes without affecting dev:**
+**Editor wants to stage without affecting dev:**
 
-- Use **drafts**. Save changes but do not click Publish. Drafts are visible
-  to logged-in editors in Studio but invisible to the public site.
-- For larger experiments, consider migrating to Option B (separate dataset).
-
-### When to migrate from Option A → Option B (two datasets)
-
-Migrate when any of these become true:
-- More than 2–3 editors working concurrently.
-- Compliance requires a deterministic prod content snapshot.
-- You routinely need to test multi-doc changes without exposing them on dev.
-
-Migration is roughly:
-1. `npx sanity datasets create development`
-2. Export prod → import into development (`sanity dataset export production` /
-   `sanity dataset import`).
-3. Set `NEXT_PUBLIC_SANITY_DATASET=development` in `virtualexperts-dev` env.
-4. Add a "promote" GitHub workflow that runs `sanity dataset import` from
-   `development` to `production` on `main` deploys.
+Prefix the folder with `_`. It stays in the repo, fully editable, and never
+appears on either environment. For blog and case studies the draft's *images
+are not published either* — `content/` is outside `public/`, and only
+published articles' images are copied into the deploy.
 
 ## Project IDs and IDs at a glance
 
 | Thing                         | Value                                      |
 | ----------------------------- | ------------------------------------------ |
-| Sanity project ID             | `r44epy9f`                                 |
-| Sanity dataset                | `production`                               |
-| Sanity API version            | `2025-01-01`                               |
-| Sanity org                    | `Workify.ph.hq@gmail.com`                  |
-| Sanity webhook id             | `DPfgDL3jB525Rcxu` — "Deploy to dev on publish" |
 | Cloudflare account            | `Workify.ph.hq@gmail.com`                  |
 | Cloudflare account ID         | `8989d421b40e5722753ce9378579c5ff`         |
 | Cloudflare zone ID            | `c4c53c15e255d0ed3bf6b83e262317a8` (virtualexperts.ph) |
@@ -229,24 +206,21 @@ Set under **Repo → Settings → Secrets and variables → Actions**:
 To rotate the Cloudflare token: create new at <https://dash.cloudflare.com/profile/api-tokens>, then
 `gh secret set CLOUDFLARE_API_TOKEN -R workifyph/virtualexperts --body <new>`, then delete the old token in CF dashboard.
 
-## Sanity webhook → GitHub Actions
+## Decommissioned
 
-The Sanity webhook `DPfgDL3jB525Rcxu` fires on `create | update | delete` of any
-`post` or `caseStudy` document. It POSTs to:
-`https://api.github.com/repos/workifyph/virtualexperts/dispatches`
-with `event_type: "sanity-publish"`, which triggers `deploy-dev.yml`.
+**Sanity CMS** (project `r44epy9f`, dataset `production`, org
+`Workify.ph.hq@gmail.com`) backed blog posts and case studies until August
+2026. All 82 documents — 12 published and 70 unpublished drafts — were
+exported into `content/` folders and the integration was removed from the
+codebase.
 
-**Important note about its auth:** The webhook currently uses a token extracted
-from the `gh` CLI session (`gho_…`). It works but is tied to a CLI session
-that could expire or be rotated. **Action item:** replace with a dedicated
-fine-grained PAT scoped to `repo` (Actions: Write) on this repo only.
-Update with:
+Still to do, outside this repo:
 
-```bash
-SANITY_TOKEN=$(node -e "console.log(require(process.env.HOME+'/.config/sanity/config.json').authToken)")
-NEW_GH_PAT=ghp_…
-curl -X PATCH "https://r44epy9f.api.sanity.io/v2025-01-01/hooks/projects/r44epy9f/DPfgDL3jB525Rcxu" \
-  -H "Authorization: Bearer $SANITY_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d "{\"headers\":{\"Authorization\":\"Bearer $NEW_GH_PAT\",\"Accept\":\"application/vnd.github+json\"}}"
-```
+- Delete the Sanity webhook `DPfgDL3jB525Rcxu` ("Deploy to dev on publish").
+  The `repository_dispatch` trigger it fired is gone, so it now fails silently.
+- Remove the `NEXT_PUBLIC_SANITY_*` and `SANITY_API_READ_TOKEN` GitHub Actions
+  secrets — the workflows no longer read them.
+- Close the Sanity project once you are satisfied nothing else depends on it.
+  **The dataset is the only remaining copy of the original Portable Text and
+  the full-resolution images**, so keep it until the folder content has been
+  live for a while.

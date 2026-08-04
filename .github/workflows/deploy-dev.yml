@@ -3,8 +3,6 @@ name: Deploy dev
 on:
   push:
     branches: [dev]
-  repository_dispatch:
-    types: [sanity-publish]
   workflow_dispatch: {}
 
 concurrency:
@@ -32,12 +30,6 @@ jobs:
         run: npm ci
 
       - name: Build (static export)
-        env:
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
-          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
-          NEXT_PUBLIC_SANITY_API_VERSION: ${{ secrets.NEXT_PUBLIC_SANITY_API_VERSION }}
-          SANITY_API_READ_TOKEN: ${{ secrets.SANITY_API_READ_TOKEN }}
-          NEXT_PUBLIC_STUDIO_ENABLED: "true"
         run: npm run build
 
       - name: Deploy to Cloudflare Pages (dev)
@@ -46,7 +38,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           # head_commit.message can be multiline and contain shell-special chars;
           # pass it via env, then strip to first line at runtime.
-          RAW_COMMIT_MSG: ${{ github.event_name == 'repository_dispatch' && 'sanity-publish' || github.event.head_commit.message }}
+          RAW_COMMIT_MSG: ${{ github.event.head_commit.message || 'manual deploy' }}
         run: |
           msg=$(printf '%s' "$RAW_COMMIT_MSG" | head -n1)
           npx wrangler@4 pages deploy out \

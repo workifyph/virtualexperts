@@ -8,23 +8,15 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "sanity:dev": "sanity dev",
-    "sanity:deploy": "sanity deploy",
     "prebuild": "node scripts/sync-content-images.mjs",
     "predev": "node scripts/sync-content-images.mjs"
   },
   "dependencies": {
-    "@portabletext/react": "^6.2.0",
-    "@sanity/image-url": "^2.1.1",
-    "@sanity/vision": "^5.24.0",
     "marked": "^18.0.7",
     "next": "16.2.3",
-    "next-sanity": "^12.4.5",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "resend": "^6.12.0",
-    "sanity": "^5.24.0",
-    "styled-components": "^6.4.1"
+    "resend": "^6.12.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260424.1",
